@@ -15,4 +15,10 @@ public class Mensagem {
 			numeroDeQuadros = (int)p;
 		}
 	}
+	
+	public void transmitir() {
+		for (Quadro quadro : quadros) {
+			quadro.transmitir();
+		}
+	}
 }

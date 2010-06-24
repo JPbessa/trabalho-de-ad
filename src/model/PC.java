@@ -1,5 +1,6 @@
 package model;
 
+
 /**
  * Classe que representa um host ligado ao hub. 
  */
@@ -48,7 +49,7 @@ public class PC extends Thread {
 	 * @return tempo O tempo do atraso de propagação.
 	 */
 	double atrasoPropagacao() {
-		return distancia * tempoPropagacaoNoMeio; // em milisegundos
+		return this.distancia * tempoPropagacaoNoMeio; // em milisegundos
 	}
 
 	public double getP() {
@@ -64,11 +65,11 @@ public class PC extends Thread {
 	}
 
 	public void setA(IntervaloChegadas a) {
-		A = a;
+		this.A = a;
 		if (a.tipo == TipoDistribuicao.DETERMINISTICO) {
-			taxaChegada = A.valor;
+			this.taxaChegada = this.A.valor;
 		} else if (a.tipo == TipoDistribuicao.EXPONENCIAL) {
-			taxaChegada = 1/A.valor;
+			this.taxaChegada = 1/this.A.valor;
 		}
 	}
 	
@@ -81,10 +82,6 @@ public class PC extends Thread {
 		return false;
 	}
 	
-	private void transmitirMensagem() {
-		
-	}
-	
 	@Override
 	public synchronized void start() {
 		while (true) {
@@ -93,7 +90,13 @@ public class PC extends Thread {
 				while (relogio < tempoEntreQuadros) {
 					// incremento relogio
 				}
-				transmitirMensagem();
+				
+				//try {
+					tx.transmitir();
+				//} catch (ColisaoDectadaException e) {
+					
+				//}
+
 				relogio = 0;
 			} else {
 				while (!meioLivre()) {
@@ -101,7 +104,7 @@ public class PC extends Thread {
 				}
 				try {
 					sleep((long)0.0096);
-					transmitirMensagem();
+					tx.transmitir();
 				} catch (InterruptedException e) {
 					System.out.println("Erro ao pausar a thread.");
 				}
