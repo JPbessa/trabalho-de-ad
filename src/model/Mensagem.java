@@ -6,13 +6,13 @@ public class Mensagem {
 	
 	private int numeroDeQuadros;
 	
-	public Mensagem(Float p) {
+	public Mensagem(double p) {
 		if (p > 0 && p < 1) {
 			// geomŽtrica
 			
 		} else {
 			// deterministico
-			numeroDeQuadros = p.intValue();
+			numeroDeQuadros = (int)p;
 		}
 	}
 }

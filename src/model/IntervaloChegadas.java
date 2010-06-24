@@ -2,20 +2,20 @@ package model;
 
 public class IntervaloChegadas {
 
-	Float valor;
+	double valor;
 	
 	TipoDistribuicao tipo;
 
-	public IntervaloChegadas(Float valor, TipoDistribuicao tipo) {
+	public IntervaloChegadas(double valor, TipoDistribuicao tipo) {
 		this.valor = valor;
 		this.tipo = tipo;
 	}
 	
-	public Float getValor() {
+	public double getValor() {
 		return valor;
 	}
 
-	public void setValor(Float valor) {
+	public void setValor(double valor) {
 		this.valor = valor;
 	}
 

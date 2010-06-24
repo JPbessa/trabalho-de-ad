@@ -8,12 +8,12 @@ public class Simulador {
 
 	public void executarCenario1() {
 		PC PC1 = new PC(100);
-		PC1.setP(new Float(40));
-		PC1.setA(new IntervaloChegadas(new Float(80), TipoDistribuicao.DETERMINISTICO));
+		PC1.setP(40);
+		PC1.setA(new IntervaloChegadas(80, TipoDistribuicao.DETERMINISTICO));
 		
 		PC PC2 = new PC(80);
-		PC2.setP(new Float(40));
-		PC2.setA(new IntervaloChegadas(new Float(80), TipoDistribuicao.DETERMINISTICO));
+		PC2.setP(40);
+		PC2.setA(new IntervaloChegadas(80, TipoDistribuicao.DETERMINISTICO));
 		
 		//PC1.start();
 		//PC2.start();

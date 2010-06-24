@@ -25,24 +25,19 @@ public class PC extends Thread {
 	 */
 	private Mensagem tx;
 	
-	/**
-	 * TODO
-	 */
-	private Float p;
+	private double p;
 	
-	/**
-	 * TODO
-	 */
 	private IntervaloChegadas A;
+
+	private double taxaChegada;
 	
-	/**
-	 * 
-	 */
-	private Float taxaChegada;
+	private final static double tempoEntreQuadros = 9.6;
+	
+	private double relogio = 0;
 	
 	/**
 	 * Construtor da classe.
-	 * @param distancia Dist‰ncia do host ao hub.
+	 * @param distancia Dist‰ncia do host ao hub (em metros).
 	 */
 	public PC(int distancia) {
 		this.distancia = distancia;
@@ -56,11 +51,11 @@ public class PC extends Thread {
 		return distancia * tempoPropagacaoNoMeio; // em milisegundos
 	}
 
-	public Float getP() {
+	public double getP() {
 		return p;
 	}
 
-	public void setP(Float p) {
+	public void setP(double p) {
 		this.p = p;
 	}
 
@@ -77,6 +72,10 @@ public class PC extends Thread {
 		}
 	}
 	
+	/**
+	 * Verifica se o cabo de conex‹o com o hub est‡ livre ou n‹o.
+	 * @return boolean Vari‡vel que indica se est‡ livre ou n‹o.
+	 */
 	private boolean meioLivre() {
 		//TODO
 		return false;
@@ -85,9 +84,6 @@ public class PC extends Thread {
 	private void transmitirMensagem() {
 		
 	}
-
-	private final static Float tempoEntreQuadros = new Float(9.6);
-	private Float relogio = new Float(0.0);
 	
 	@Override
 	public synchronized void start() {
@@ -98,7 +94,7 @@ public class PC extends Thread {
 					// incremento relogio
 				}
 				transmitirMensagem();
-				relogio = new Float(0.0);
+				relogio = 0;
 			} else {
 				while (!meioLivre()) {
 					// incremento relogio
