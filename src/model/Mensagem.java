@@ -1,8 +1,11 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Mensagem {
 	
-	private Quadro[] quadros;
+	private List<Quadro> quadros = new ArrayList<Quadro>();
 	
 	private int numeroDeQuadros;
 	

@@ -23,7 +23,7 @@ public class Main {
 				simulador.executarCenario4();
 				break;
 			default:
-				System.out.println("Cenario Invalido");
+				System.out.println("Cenario Invalido!");
 				System.exit(0);
 		}
 	}

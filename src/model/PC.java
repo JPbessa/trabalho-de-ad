@@ -1,6 +1,5 @@
 package model;
 
-
 /**
  * Classe que representa um host ligado ao hub. 
  */
@@ -9,7 +8,7 @@ public class PC extends Thread {
 	/**
 	 * Propagação elétrica no meio físico.
 	 */
-	private static final double tempoPropagacaoNoMeio = 5.0 * Math.pow(10, -6); // 5 milisegundos/metro
+	private static final double tempoPropagacaoNoMeio = 5 * Math.pow(10, -6); // 5 milisegundos/metro
 	
 	/**
 	 * Distância do host ao hub.
@@ -91,11 +90,7 @@ public class PC extends Thread {
 					// incremento relogio
 				}
 				
-				//try {
-					tx.transmitir();
-				//} catch (ColisaoDectadaException e) {
-					
-				//}
+				tx.transmitir();
 
 				relogio = 0;
 			} else {
@@ -106,7 +101,7 @@ public class PC extends Thread {
 					sleep((long)0.0096);
 					tx.transmitir();
 				} catch (InterruptedException e) {
-					System.out.println("Erro ao pausar a thread.");
+					System.out.println("Erro ao esperar o tempo entre quadros.");
 				}
 			}
 		}
