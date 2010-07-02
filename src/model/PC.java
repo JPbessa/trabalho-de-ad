@@ -3,7 +3,7 @@ package model;
 /**
  * Classe que representa um host ligado ao hub. 
  */
-public class PC extends Thread {
+public class PC {
 	
 	/**
 	 * Propagação elétrica no meio físico.
@@ -81,29 +81,33 @@ public class PC extends Thread {
 		return false;
 	}
 	
-	@Override
-	public synchronized void start() {
-		while (true) {
-			tx = new Mensagem(p);
-			if (meioLivre()) {
-				while (relogio < tempoEntreQuadros) {
-					// incremento relogio
-				}
-				
-				tx.transmitir();
-
-				relogio = 0;
-			} else {
-				while (!meioLivre()) {
-					// incremento relogio
-				}
-				try {
-					sleep((long)0.0096);
-					tx.transmitir();
-				} catch (InterruptedException e) {
-					System.out.println("Erro ao esperar o tempo entre quadros.");
-				}
-			}
-		}
+	public void gerarEventos() {
+		
 	}
+	
+//	@Override
+//	public synchronized void start() {
+//		while (true) {
+//			tx = new Mensagem(p);
+//			if (meioLivre()) {
+//				while (relogio < tempoEntreQuadros) {
+//					// incremento relogio
+//				}
+//				
+//				tx.transmitir();
+//
+//				relogio = 0;
+//			} else {
+//				while (!meioLivre()) {
+//					// incremento relogio
+//				}
+//				try {
+//					sleep((long)0.0096);
+//					tx.transmitir();
+//				} catch (InterruptedException e) {
+//					System.out.println("Erro ao esperar o tempo entre quadros.");
+//				}
+//			}
+//		}
+//	}
 }
