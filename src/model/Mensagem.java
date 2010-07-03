@@ -9,19 +9,45 @@ public class Mensagem {
 	
 	private int numeroDeQuadros;
 	
-	public Mensagem(double p) {
+	private PC emissor;
+	
+	public Mensagem(double p, PC origem) {
 		if (p > 0 && p < 1) {
-			// geomŽtrica
+			// geomï¿½trica
 			
 		} else {
 			// deterministico
 			numeroDeQuadros = (int)p;
 		}
+
+		this.emissor = origem;
+		geraQuadros(p);
 	}
 	
 	public void transmitir() {
 		for (Quadro quadro : quadros) {
-			quadro.transmitir();
+			emissor.setTap(quadro.transmitir());
 		}
+	}
+	
+	private boolean geraQuadros(double n) {
+		for(int i=0; i<(int)n; i++) new Quadro(this);
+		return true;
+	}
+
+	public int getNumeroDeQuadros() {
+		return numeroDeQuadros;
+	}
+
+	public List<Quadro> getQuadros() {
+		return quadros;
+	}
+	
+	public void setQuadro(Quadro q) {
+		this.quadros.add(q);
+	}
+	
+	public PC getEmissor(){
+		return this.emissor;
 	}
 }
