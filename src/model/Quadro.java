@@ -34,13 +34,23 @@ public class Quadro {
 	}
 
 	public long transmitir() {
-		Simulador.filaEventos.remove(this);
-		System.out.println("Quadro enviado!");
+		Evento eventoTransmissao = Simulador.filaEventos.remove();
+		System.out.println("Quadro " + this.hashCode() + " enviado!");
+		
+		Long tempo = eventoTransmissao.getTempo() + 
+					 emissor.getTempoDeTransmissao() + 
+					 emissor.atrasoPropagacao(); // Tempo do emissor ate o HUB.
+		
+		for (PC pc : Simulador.getPcsConectados()) {
+			tempo += pc.atrasoPropagacao() +
+					 emissor.getTempoDeTransmissao(); // Tempo do hub ate o receptor.
+			
+			Simulador.filaEventos.add(new Evento(tempo, TipoEvento.RECEPCAO, pc, this));//FIXME NAO EH O EMISSOR!!! SAO TODOS OS PCs!
+			System.out.println("Tempo para envio do quadro: " + (tempo - eventoTransmissao.getTempo()) + " ns");
+		}
+
 		
 		return Simulador.now();
-		//if (emissor.getRx())
-		// se sinal recebido n�o � o mesmo que a esta��o est� enviando ou se sinais sobrepostos existem na porta RX,
-		// entao houve colisao
 	}
 	
 	public Double binaryBackoff() throws QuadroDescartadoException {

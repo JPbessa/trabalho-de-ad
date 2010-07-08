@@ -2,10 +2,16 @@ package model;
 
 public class Evento implements Comparable<Evento>{
 
-	private Double tempo;
+	private Long tempo;
+	private TipoEvento tipo;
+	private PC pc;
+	private Quadro quadro;
 	
-	public Evento(Double tempo_execucao){
-		tempo = tempo_execucao;
+	public Evento(Long tempo, TipoEvento tipo, PC pc, Quadro quadro){
+		this.tempo = tempo;
+		this.tipo = tipo;
+		this.pc = pc;
+		this.quadro = quadro;
 	}
 	
 	@Override
@@ -13,7 +19,7 @@ public class Evento implements Comparable<Evento>{
 		return this.tempo.compareTo(e.tempo);
 	}
 	
-	public Double getTempo(){
+	public Long getTempo(){
 		return tempo;
 	}
 }

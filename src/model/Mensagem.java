@@ -7,13 +7,14 @@ public class Mensagem {
 	
 	private List<Quadro> quadros = new ArrayList<Quadro>();
 	
-	private int numeroDeQuadros;
+	private int numeroDeQuadros = 0;
 	
 	private PC emissor;
 	
 	public Mensagem(double p, PC origem) {
 		if (p > 0 && p < 1) {
 			// geom�trica
+			//TODO pegar o numeroDeQuadros por aqui.
 			
 		} else {
 			// deterministico
@@ -21,7 +22,8 @@ public class Mensagem {
 		}
 
 		this.emissor = origem;
-		geraQuadros(p);
+		geraQuadros(numeroDeQuadros);
+		
 	}
 	
 	public void transmitir() {
@@ -30,8 +32,8 @@ public class Mensagem {
 		}
 	}
 	
-	private boolean geraQuadros(double n) {
-		for(int i=0; i<(int)n; i++) new Quadro(this);
+	private boolean geraQuadros(int n) {
+		for(int i=0; i < n; i++) new Quadro(this);
 		return true;
 	}
 
