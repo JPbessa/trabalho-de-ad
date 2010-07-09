@@ -2,53 +2,37 @@ package model;
 
 import java.util.Random;
 
-import controller.Simulador;
-
-import model.exception.ColisaoDectadaException;
 import model.exception.QuadroDescartadoException;
-
+import controller.Simulador;
 
 public class Quadro {
 	
-	private static final int tamanhoDoQuadro = 1000;
-	
-	//private byte[] dados = new byte[tamanhoDoQuadro];
-	
+	public static final int tamanho = 1000;
 	private PC emissor;
-	
 	private int numeroDeColisoes = 0;
-	
-	private long t_envio;
 	
 	public Quadro(Mensagem msg) {
 		this.emissor = msg.getEmissor();
-		this.t_envio = Simulador.inicioSimulacao + calculaTempoEnvio();
 		msg.setQuadro(this);
 	}
 	
-	// TODO definir calculo correto para calcular o tempo de envio (propagacao + tam_quadro)
-	private long calculaTempoEnvio() {
-		Random rand = new Random();
-		int i = 1 + rand.nextInt(100);
-		return (long) (tamanhoDoQuadro/i);
-	}
-
 	public long transmitir() {
 		Evento eventoTransmissao = Simulador.filaEventos.remove();
 		System.out.println("Quadro " + this.hashCode() + " enviado!");
 		
-		Long tempo = eventoTransmissao.getTempo() + 
-					 emissor.getTempoDeTransmissao() + 
-					 emissor.atrasoPropagacao(); // Tempo do emissor ate o HUB.
+		Long tempoEmissorHub = eventoTransmissao.getTempo() + 
+							   emissor.getTempoDeTransmissao() + 
+							   emissor.atrasoPropagacao(); // Tempo do emissor ate o HUB.
 		
+		Long tempoHubReceptor;
 		for (PC pc : Simulador.getPcsConectados()) {
-			tempo += pc.atrasoPropagacao() +
-					 emissor.getTempoDeTransmissao(); // Tempo do hub ate o receptor.
+			tempoHubReceptor = pc.atrasoPropagacao() +
+					 		   emissor.getTempoDeTransmissao(); // Tempo do hub ate o receptor.
 			
-			Simulador.filaEventos.add(new Evento(tempo, TipoEvento.RECEPCAO, pc, this));//FIXME NAO EH O EMISSOR!!! SAO TODOS OS PCs!
+			Long tempo = tempoEmissorHub + tempoHubReceptor;
+			Simulador.filaEventos.add(new Evento(tempo, TipoEvento.RECEPCAO, pc, this));
 			System.out.println("Tempo para envio do quadro: " + (tempo - eventoTransmissao.getTempo()) + " ns");
 		}
-
 		
 		return Simulador.now();
 	}

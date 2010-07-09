@@ -14,8 +14,8 @@ public class PC {
 	private IntervaloChegadas A;
 	private double taxaChegada;
 	private final int tempoEntreQuadros = 9600; // em ns
-	private final int tempoDeTransmissao = (int)Math.pow(10, 5); // em ns 
-
+	private final int tempoDeTransmissao = (int) Math.pow(10, 5); // em ns 
+	
 	private Vector<Double> tap;
 
 	public PC(int distancia) {
@@ -57,11 +57,6 @@ public class PC {
 		return tempoDeTransmissao;
 	}
 	
-	private boolean meioLivre() {
-		//TODO
-		return false;
-	}
-	
 	public void gerarEventos() {
 		
 		List<Quadro> quadros = tx.getQuadros();
@@ -79,12 +74,4 @@ public class PC {
 		
 	}
 
-	public Double calculaMediaTAP() {
-		Double soma = 0.0;
-		for(int i=0; i<this.tap.size();i++){
-			soma+=(Double) this.tap.get(i);
-		}
-		
-		return soma/this.tap.size();
-	}
 }

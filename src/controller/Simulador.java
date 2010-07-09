@@ -12,10 +12,9 @@ import model.TipoDistribuicao;
 
 public class Simulador {
 	
+	public static int velocidadeEthernet = (int)Math.pow(10, 7);
 	public static PriorityQueue<Evento> filaEventos = new PriorityQueue<Evento>();
-	
 	public static Long inicioSimulacao;
-	
 	private static List<PC> pcsConectados = new ArrayList<PC>();
 	
 	public void executarCenario1() {
@@ -31,7 +30,6 @@ public class Simulador {
 		
 		PC1.gerarEventos();
 		
-		System.out.println("[PC1] Media TAP = " + PC1.calculaMediaTAP());
 	}
 	
 	public static Long now() {
