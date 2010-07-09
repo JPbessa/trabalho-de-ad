@@ -30,7 +30,7 @@ public class Quadro {
 					 		   emissor.getTempoDeTransmissao(); // Tempo do hub ate o receptor.
 			
 			Long tempo = tempoEmissorHub + tempoHubReceptor;
-			Simulador.filaEventos.add(new Evento(tempo, TipoEvento.RECEPCAO, pc, this));
+			Simulador.filaEventos.add(new Evento(tempo, eventoTransmissao.getRodada(), TipoEvento.RECEPCAO, pc, this));
 			System.out.println("Tempo para envio do quadro: " + (tempo - eventoTransmissao.getTempo()) + " ns");
 		}
 		

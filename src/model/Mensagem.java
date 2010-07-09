@@ -22,7 +22,7 @@ public class Mensagem {
 		}
 
 		this.emissor = origem;
-		geraQuadros(numeroDeQuadros);
+		geraQuadros();
 		
 	}
 	
@@ -32,8 +32,8 @@ public class Mensagem {
 		}
 	}
 	
-	private boolean geraQuadros(int n) {
-		for(int i=0; i < n; i++) new Quadro(this);
+	private boolean geraQuadros() {
+		for(int i=0; i < numeroDeQuadros; i++) new Quadro(this);
 		return true;
 	}
 

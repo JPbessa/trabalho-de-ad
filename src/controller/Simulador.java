@@ -13,9 +13,11 @@ import model.TipoDistribuicao;
 public class Simulador {
 	
 	public static int velocidadeEthernet = (int)Math.pow(10, 7);
-	public static PriorityQueue<Evento> filaEventos = new PriorityQueue<Evento>();
 	public static Long inicioSimulacao;
+	public static PriorityQueue<Evento> filaEventos = new PriorityQueue<Evento>();
+	
 	private static List<PC> pcsConectados = new ArrayList<PC>();
+	private int numeroDeRodadas = 5;
 	
 	public void executarCenario1() {
 		inicioSimulacao = now();
@@ -28,7 +30,10 @@ public class Simulador {
 		
 		pcsConectados.add(PC1);
 		
-		PC1.gerarEventos();
+		int rodada;
+		for (rodada = 1; rodada <= numeroDeRodadas; rodada++) {
+			PC1.gerarEventos(rodada);
+		}
 		
 	}
 	

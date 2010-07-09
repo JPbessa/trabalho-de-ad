@@ -3,12 +3,14 @@ package model;
 public class Evento implements Comparable<Evento>{
 
 	private Long tempo;
+	private int rodada;
 	private TipoEvento tipo;
 	private PC pc;
 	private Quadro quadro;
 	
-	public Evento(Long tempo, TipoEvento tipo, PC pc, Quadro quadro){
+	public Evento(Long tempo, int rodada, TipoEvento tipo, PC pc, Quadro quadro){
 		this.tempo = tempo;
+		this.rodada = rodada;
 		this.tipo = tipo;
 		this.pc = pc;
 		this.quadro = quadro;
@@ -21,5 +23,9 @@ public class Evento implements Comparable<Evento>{
 	
 	public Long getTempo(){
 		return tempo;
+	}
+	
+	public int getRodada(){
+		return rodada;
 	}
 }
