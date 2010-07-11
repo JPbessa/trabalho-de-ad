@@ -28,4 +28,16 @@ public class Evento implements Comparable<Evento>{
 	public int getRodada(){
 		return rodada;
 	}
+
+	public TipoEvento getTipo() {
+		return tipo;
+	}
+
+	public PC getPc() {
+		return pc;
+	}
+
+	public Quadro getQuadro() {
+		return quadro;
+	}
 }

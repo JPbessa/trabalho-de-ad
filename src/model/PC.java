@@ -23,14 +23,18 @@ public class PC {
 		this.tap = new Vector<Double>();
 	}
 	
-	public void setTap(long val) {
-		this.tap.add((double) val);
-	}
+//	public void setTap(long val) {
+//		this.tap.add((double) val);
+//	}
 
 	public Long atrasoPropagacao() {
 		return new Long(this.distancia * tempoPropagacaoNoMeio); // em nanosegundos
 	}
 
+	public Mensagem getTx() {
+		return tx;
+	}
+	
 	public double getP() {
 		return p;
 	}
@@ -58,20 +62,12 @@ public class PC {
 	}
 	
 	public void gerarEventos(int rodada) {
-		
-		List<Quadro> quadros = tx.getQuadros();
 		int eventosCriados = 0;
-		for(Quadro quadro : quadros){
+		for (Quadro quadro : tx.getQuadros()) {
 			Long tempo = (Long) (Simulador.inicioSimulacao + (tempoEntreQuadros+tempoDeTransmissao)*eventosCriados);
 			Simulador.filaEventos.add(new Evento(tempo, rodada, TipoEvento.EMISSAO, this, quadro));
 			System.out.println("Evento criado: (" + tempo + ", " + rodada + ", TipoEvento.EMISSAO, PC1, " + quadro.hashCode() + ")");
 			eventosCriados++;
 		}
-		
-		System.out.println("Tamanho da fila de eventos gerada = " + Simulador.filaEventos.size());
-		System.out.println("Iniciando transmissao de PC1....");
-		tx.transmitir();
-		
 	}
-
 }

@@ -28,7 +28,7 @@ public class Mensagem {
 	
 	public void transmitir() {
 		for (Quadro quadro : quadros) {
-			emissor.setTap(quadro.transmitir());
+			//emissor.setTap(quadro.transmitir());
 		}
 	}
 	

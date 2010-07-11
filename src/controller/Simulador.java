@@ -3,18 +3,19 @@ package controller;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import model.Evento;
 import model.IntervaloChegadas;
 import model.PC;
 import model.TipoDistribuicao;
+import model.TipoEvento;
 
 public class Simulador {
 	
 	public static int velocidadeEthernet = (int)Math.pow(10, 7);
 	public static Long inicioSimulacao;
-	public static PriorityQueue<Evento> filaEventos = new PriorityQueue<Evento>();
+	public static PriorityBlockingQueue<Evento> filaEventos = new PriorityBlockingQueue<Evento>();
 	
 	private static List<PC> pcsConectados = new ArrayList<PC>();
 	private int numeroDeRodadas = 5;
@@ -31,16 +32,26 @@ public class Simulador {
 		pcsConectados.add(PC1);
 		
 		int rodada;
-		for (rodada = 1; rodada <= numeroDeRodadas; rodada++) {
-			PC1.gerarEventos(rodada);
-		}
+		//for (rodada = 1; rodada <= numeroDeRodadas; rodada++) {
+			PC1.gerarEventos(/*rodada*/1);
+			iniciarSimulacao();
+		//}
 		
 	}
 	
-	public static Long now() {
+	private void iniciarSimulacao() {
+		for (Evento evento : filaEventos) {
+			if (evento.getTipo() == TipoEvento.EMISSAO) {
+				evento.getQuadro().transmitir();
+			} else if (evento.getTipo() == TipoEvento.RECEPCAO) {
+				evento.getQuadro().receber();
+			}
+		}
+	}
+	
+	private static Long now() {
 		Calendar cal = Calendar.getInstance();
 		return new Long(cal.getTimeInMillis() * (int)Math.pow(10, 6)); // em ns
-	    
 	}
 
 	public static List<PC> getPcsConectados() {

@@ -1,6 +1,8 @@
 package model;
 
+import java.util.PriorityQueue;
 import java.util.Random;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import model.exception.QuadroDescartadoException;
 import controller.Simulador;
@@ -17,6 +19,7 @@ public class Quadro {
 	}
 	
 	public long transmitir() {
+		PriorityBlockingQueue<Evento> ead = Simulador.filaEventos;
 		Evento eventoTransmissao = Simulador.filaEventos.remove();
 		System.out.println("Quadro " + this.hashCode() + " enviado!");
 		
@@ -31,10 +34,17 @@ public class Quadro {
 			
 			Long tempo = tempoEmissorHub + tempoHubReceptor;
 			Simulador.filaEventos.add(new Evento(tempo, eventoTransmissao.getRodada(), TipoEvento.RECEPCAO, pc, this));
+			System.out.println("Evento criado: (" + tempo + ", TipoEvento.RECEPCAO, PC1, " + this.hashCode() + ")");
 			System.out.println("Tempo para envio do quadro: " + (tempo - eventoTransmissao.getTempo()) + " ns");
 		}
 		
-		return Simulador.now();
+		return 0; //FIXME
+	}
+	
+	public long receber() {
+		// Coleta as estatisticas da rodada
+		//FIXME
+		return 0;
 	}
 	
 	public Double binaryBackoff() throws QuadroDescartadoException {
