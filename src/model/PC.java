@@ -1,6 +1,5 @@
 package model;
 
-import java.util.List;
 import java.util.Vector;
 
 import controller.Simulador;
@@ -29,6 +28,14 @@ public class PC {
 
 	public Long atrasoPropagacao() {
 		return new Long(this.distancia * tempoPropagacaoNoMeio); // em nanosegundos
+	}
+	
+	public int getDistancia() {
+		return distancia;
+	}
+
+	public void setDistancia(int distancia) {
+		this.distancia = distancia;
 	}
 
 	public Mensagem getTx() {
@@ -66,7 +73,7 @@ public class PC {
 		for (Quadro quadro : tx.getQuadros()) {
 			Long tempo = (Long) (Simulador.inicioSimulacao + (tempoEntreQuadros+tempoDeTransmissao)*eventosCriados);
 			Simulador.filaEventos.add(new Evento(tempo, rodada, TipoEvento.EMISSAO, this, quadro));
-			System.out.println("Evento criado: (" + tempo + ", " + rodada + ", TipoEvento.EMISSAO, PC1, " + quadro.hashCode() + ")");
+			System.out.println("Evento criado: (" + tempo + ", " + rodada + ", TipoEvento.EMISSAO, PC" + distancia + ", " + quadro.hashCode() + ")");
 			eventosCriados++;
 		}
 	}

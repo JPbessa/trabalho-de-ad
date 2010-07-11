@@ -1,6 +1,5 @@
 package model;
 
-import java.util.PriorityQueue;
 import java.util.Random;
 import java.util.concurrent.PriorityBlockingQueue;
 
@@ -34,7 +33,7 @@ public class Quadro {
 			
 			Long tempo = tempoEmissorHub + tempoHubReceptor;
 			Simulador.filaEventos.add(new Evento(tempo, eventoTransmissao.getRodada(), TipoEvento.RECEPCAO, pc, this));
-			System.out.println("Evento criado: (" + tempo + ", TipoEvento.RECEPCAO, PC1, " + this.hashCode() + ")");
+			System.out.println("Evento criado: (" + tempo + ", TipoEvento.RECEPCAO, PC" + pc.getDistancia() + ", " + this.hashCode() + ")");
 			System.out.println("Tempo para envio do quadro: " + (tempo - eventoTransmissao.getTempo()) + " ns");
 		}
 		
