@@ -40,4 +40,15 @@ public class Evento implements Comparable<Evento>{
 	public Quadro getQuadro() {
 		return quadro;
 	}
+	
+	@Override
+	public String toString() {
+		return "evento {" +
+					"tempo: " + tempo + ", " +
+					"rodada: " + rodada + ", " +
+					"tipo: " + tipo + ", " +
+					"pc: " + pc + ", " +
+					"quadro: " + quadro +
+				"}";
+	}
 }

@@ -72,9 +72,17 @@ public class PC {
 		int eventosCriados = 0;
 		for (Quadro quadro : tx.getQuadros()) {
 			Long tempo = (Long) (Simulador.inicioSimulacao + (tempoEntreQuadros+tempoDeTransmissao)*eventosCriados);
-			Simulador.filaEventos.add(new Evento(tempo, rodada, TipoEvento.EMISSAO, this, quadro));
-			System.out.println("Evento criado: (" + tempo + ", " + rodada + ", TipoEvento.EMISSAO, PC" + distancia + ", " + quadro.hashCode() + ")");
+			
+			Evento evento = new Evento(tempo, rodada, TipoEvento.EMISSAO, this, quadro);
+			Simulador.filaEventos.add(evento);
+			System.out.println(evento);
+			
 			eventosCriados++;
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return this.distancia + "m";
 	}
 }
