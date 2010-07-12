@@ -21,35 +21,76 @@ public class Simulador {
 	private int numeroDeRodadas = 1;
 	
 	public void executarCenario(int cenario) {
-		inicioSimulacao = now();
+
+		PC PC1 = new PC(100), PC2 = new PC(80), PC3 = new PC(60), PC4 = new PC(40);
 		
+		inicioSimulacao = now();
 		System.out.println("Executando cenario " + cenario + "... (" + inicioSimulacao + ")");
 		
 		switch (cenario) {
 			case 1:
-				PC PC1 = new PC(100);
 				PC1.setP(4); // o correto Ž 40. O 4 foi somente para nao printar mta coisa por enquanto.
 				PC1.setA(new IntervaloChegadas(80, TipoDistribuicao.DETERMINISTICO));
 				
-				PC PC2 = new PC(80);
 				PC2.setP(4); // o correto Ž 40. O 4 foi somente para nao printar mta coisa por enquanto.
 				PC2.setA(new IntervaloChegadas(80, TipoDistribuicao.DETERMINISTICO));
 				
-				//pcsConectados.add(PC1);
+				pcsConectados.add(PC1);
 				pcsConectados.add(PC2);
 				
 				break;
 			case 2:
-				//
+				PC1.setP(40);
+				PC1.setA(new IntervaloChegadas(80, TipoDistribuicao.EXPONENCIAL));
+				
+				PC2.setP(40);
+				PC2.setA(new IntervaloChegadas(80, TipoDistribuicao.EXPONENCIAL));
+				
+				pcsConectados.add(PC1);
+				pcsConectados.add(PC2);
+				
 				break;
 			case 3:
-				//
+				PC1.setP(40);
+				PC1.setA(new IntervaloChegadas(80, TipoDistribuicao.DETERMINISTICO));
+				
+				PC2.setP(1);
+				PC2.setA(new IntervaloChegadas(16, TipoDistribuicao.DETERMINISTICO));
+				
+				PC3.setP(1);
+				PC3.setA(new IntervaloChegadas(16, TipoDistribuicao.DETERMINISTICO));
+				
+				PC4.setP(1);
+				PC4.setA(new IntervaloChegadas(16, TipoDistribuicao.DETERMINISTICO));
+				
+				pcsConectados.add(PC1);
+				pcsConectados.add(PC2);
+				pcsConectados.add(PC3);
+				pcsConectados.add(PC4);
+				
 				break;
 			case 4:
-				//
+				PC1.setP(40);
+				PC1.setA(new IntervaloChegadas(80, TipoDistribuicao.DETERMINISTICO));
+				
+				PC2.setP(1);
+				PC2.setA(new IntervaloChegadas(16, TipoDistribuicao.EXPONENCIAL));
+				
+				PC3.setP(1);
+				PC3.setA(new IntervaloChegadas(16, TipoDistribuicao.EXPONENCIAL));
+				
+				PC4.setP(1);
+				PC4.setA(new IntervaloChegadas(16, TipoDistribuicao.EXPONENCIAL));
+				
+				pcsConectados.add(PC1);
+				pcsConectados.add(PC2);
+				pcsConectados.add(PC3);
+				pcsConectados.add(PC4);
+				
 				break;
 			default:
-				//
+				System.out.println("Cenario Invalido");
+				System.exit(0);
 				break;
 		}
 		
