@@ -2,20 +2,20 @@ package model;
 
 public class IntervaloChegadas {
 
-	double valor;
+	long valor;
 	
 	TipoDistribuicao tipo;
 
-	public IntervaloChegadas(double valor, TipoDistribuicao tipo) {
+	public IntervaloChegadas(long valor, TipoDistribuicao tipo) {
 		this.valor = valor;
 		this.tipo = tipo;
 	}
 	
-	public double getValor() {
+	public long getValor() {
 		return valor;
 	}
 
-	public void setValor(double valor) {
+	public void setValor(long valor) {
 		this.valor = valor;
 	}
 

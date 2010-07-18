@@ -10,7 +10,7 @@ public class Main {
 		
 		System.out.println("Escolha o cenario desejado:");
 		Scanner scan = new Scanner(new BufferedInputStream(System.in));
-		Integer cenario = scan.nextInt();
+		Integer cenario = 1;//scan.nextInt();
 		
 		Simulador simulador = new Simulador();
 		simulador.executarCenario(cenario);

@@ -1,24 +1,31 @@
 package model;
 
-public class Evento implements Comparable<Evento>{
+public abstract class Evento implements Comparable<Evento>{
 
 	private Long tempo;
 	private int rodada;
-	private TipoEvento tipo;
 	private PC pc;
 	private Quadro quadro;
 	
-	public Evento(Long tempo, int rodada, TipoEvento tipo, PC pc, Quadro quadro){
+	public Evento(Long tempo, int rodada, PC pc, Quadro quadro){
 		this.tempo = tempo;
 		this.rodada = rodada;
-		this.tipo = tipo;
 		this.pc = pc;
 		this.quadro = quadro;
 	}
 	
+	public abstract void executar();
+	
 	@Override
 	public int compareTo(Evento e) {
-		return this.tempo.compareTo(e.tempo);
+		if (this.getTempo() > e.getTempo()) {
+			return 1;
+		} else if (this.getTempo() == e.getTempo()) {
+			if (this.getPc().getDistancia() >= e.getPc().getDistancia()) {
+				return 1;
+			}
+		}
+		return -1;
 	}
 	
 	public Long getTempo(){
@@ -27,10 +34,6 @@ public class Evento implements Comparable<Evento>{
 	
 	public int getRodada(){
 		return rodada;
-	}
-
-	public TipoEvento getTipo() {
-		return tipo;
 	}
 
 	public PC getPc() {
@@ -46,7 +49,6 @@ public class Evento implements Comparable<Evento>{
 		return "evento {" +
 					"tempo: " + tempo + ", " +
 					"rodada: " + rodada + ", " +
-					"tipo: " + tipo + ", " +
 					"pc: " + pc + ", " +
 					"quadro: " + quadro +
 				"}";
