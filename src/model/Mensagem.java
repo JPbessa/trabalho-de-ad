@@ -3,9 +3,6 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.math.random.RandomData;
-import org.apache.commons.math.random.RandomDataImpl;
-
 public class Mensagem {
 	
 	private List<Quadro> quadros = new ArrayList<Quadro>();

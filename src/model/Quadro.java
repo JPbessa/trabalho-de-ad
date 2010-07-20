@@ -1,8 +1,6 @@
 package model;
 
 import java.util.Random;
-import java.util.UUID;
-
 import model.exception.QuadroDescartadoException;
 import controller.Simulador;
 
