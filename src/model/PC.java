@@ -20,7 +20,7 @@ public class PC {
 	
 	private Vector<Double> tap;
 
-	private Transmissao proximaTransmissao;
+	private Transmissao transmissaoCorrente;
 	
 	public PC(int distancia) {
 		this.distancia = distancia;
@@ -68,31 +68,34 @@ public class PC {
 		return tempoDeTransmissao;
 	}
 	
+	private long tempoUltimaMsg = 0;
 	public void gerarMensagens(long tempoAtual,int rodada) {
 		
-		long tempoUltimaMsg = tx.isEmpty() ? 0 : tx.get(tx.size()-1).getTempoCriacao();
+		if (tempoAtual%1000000 == 0) {
+			System.out.println("AVISADO: tempo = " + tempoAtual);
+		}
+		
+		if (!tx.isEmpty()) {
+			tempoUltimaMsg = tx.get(tx.size()-1).getTempoCriacao();
+		}
 
 		// Gera novas mensagens de acordo com o tipo de chegada de mensagens
 		if(tempoUltimaMsg <= tempoAtual) {
 			
-			if (tx.isEmpty()) {
-				this.tx.add(new Mensagem(this.p, this, 0));
-			} else {
-				long tempo = 0;
-				if (A.tipo == TipoDistribuicao.DETERMINISTICO) {
-					tempo = tempoUltimaMsg + A.getValor();
-				} else if (A.tipo == TipoDistribuicao.EXPONENCIAL) {
-					Double tempoExponencial = GeradorDados.gerarExponencial(new Double(A.getValor()));
-					tempo = tempoUltimaMsg + tempoExponencial.intValue();
-				}
-				this.tx.add(new Mensagem(this.p, this, tempo));
+			long tempo = 0;
+			if (A.tipo == TipoDistribuicao.DETERMINISTICO) {
+				tempo = tempoUltimaMsg + A.getValor();
+			} else if (A.tipo == TipoDistribuicao.EXPONENCIAL) {
+				Double tempoExponencial = GeradorDados.gerarExponencial(new Double(A.getValor()));
+				tempo = tempoUltimaMsg + tempoExponencial.intValue();
 			}
+			this.tx.add(new Mensagem(this.p, this, tempo));
 
 			System.out.println("GerarMensagens(PC "+this.distancia+") com " + tx.size() +" mensagens.");
-			criarEventoTransmissao(tempoAtual);			
+		//	criarEventoTransmissao(tempoAtual);			
 		}
 		
-		if(proximaTransmissao==null) criarEventoTransmissao(tempoAtual);
+		if(transmissaoCorrente==null) criarEventoTransmissao(tempoAtual);
 	}
 	
 	@Override
@@ -119,6 +122,7 @@ public class PC {
 		
 		if(confirmacoes == Simulador.getPcsConectados().size()){
 			tx.get(0).getQuadros().remove(quadro);
+			transmissaoCorrente = null;
 			
 			// Se acabaram os quadros da mensagem, remova a mesma
 			if (tx.get(0).getQuadros().isEmpty()) {
@@ -139,7 +143,7 @@ public class PC {
 			confirmacoes = 0;
 			System.out.println("Evento transmissao: " + evento);
 			
-			proximaTransmissao = evento;
+			transmissaoCorrente = evento;
 		}
 		
 	}

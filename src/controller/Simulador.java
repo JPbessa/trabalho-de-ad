@@ -113,6 +113,8 @@ public class Simulador {
 				
 			while (evento!=null){
 				
+				System.out.println("TEMPO: " + evento.getTempo());
+				
 				// Se o evento eh da proxima rodada
 				if (evento.getTempo() >= (rodadaAtual + 1) * getTamanhoRodada() + getFaseTransiente()) {
 					primeiroEventoRodada = evento;
@@ -127,7 +129,20 @@ public class Simulador {
 				}
 								
 				// Evento da proxima execucao (null se nao tiver mais eventos)
-				evento = filaEventos.ceiling(evento);
+				Evento proximoEvento = filaEventos.ceiling(evento); 
+				if (proximoEvento == null) {
+					int tam = filaEventos.size();
+					Long tempoAvancando = evento.getTempo();
+					while (filaEventos.size() == tam) {
+						tempoAvancando++;
+						for (PC pc : pcsConectados) {
+							pc.gerarMensagens(tempoAvancando, rodadaAtual);
+						}
+					}
+					evento = filaEventos.ceiling(evento);
+				} else {
+					evento = proximoEvento;
+				}
 			}
 		}
 	}
