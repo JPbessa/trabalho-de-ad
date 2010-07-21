@@ -14,7 +14,8 @@ public class PC {
 	private double p;
 	private IntervaloChegadas A;
 	public final long tempoEntreQuadros = 9600; // em ns
-	public final long tempoDeTransmissao = (int) Math.pow(10, 5); // em ns 
+	public final long tempoDeTransmissao = (int) Math.pow(10, 5); // em ns
+	public final long tempoCriacaoUltimaTransmissao = 0;
 	
 	int confirmacoes = 0;
 	
@@ -91,7 +92,7 @@ public class PC {
 			}
 			this.tx.add(new Mensagem(this.p, this, tempo));
 
-			System.out.println("GerarMensagens(PC "+this.distancia+") com " + tx.size() +" mensagens.");
+			System.out.println("GerarMensagens(PC "+this.distancia+") com " + tx.size() +" mensagens. Tempo de Geração: " + tempo + ". Tempo Atual: " + tempoAtual);
 		//	criarEventoTransmissao(tempoAtual);			
 		}
 		
@@ -103,9 +104,14 @@ public class PC {
 		return this.distancia + "m";
 	}
 
-	public boolean livre(Transmissao eventoTransmissao) {
-		// TODO ter passado 9,6 us da ultima transmissao
+	public boolean livre(Transmissao eventoTransmissao, long tempoFinalUltimaTransmissao) {
+		
+		// se tempo Atual >= tempo final da ultimaTransmissao + 9,6us -> true
+		if (eventoTransmissao.getTempo() >= (tempoFinalUltimaTransmissao + tempoEntreQuadros))
+			return true;
+		
 		return true;
+		
 	}
 
 	public void enviarConfirmacao(Quadro quadro, long tempo) {
@@ -138,7 +144,10 @@ public class PC {
 		
 		if (!tx.isEmpty()) {
 			
-			Transmissao evento = new Transmissao(tempo, Simulador.getRodadaAtual(), this, tx.get(0).getQuadros().get(0));
+			// verifica se o evento deve ser criado com o tempo de criação da mensagem ou com o tempo atual
+			long tempoCriacaoEvento = (tempo > tx.get(0).getTempoCriacao()) ? tempo : tx.get(0).getTempoCriacao();  
+			
+			Transmissao evento = new Transmissao(tempoCriacaoEvento, Simulador.getRodadaAtual(), this, tx.get(0).getQuadros().get(0));
 			Simulador.filaEventos.add(evento);
 			confirmacoes = 0;
 			System.out.println("Evento transmissao: " + evento);

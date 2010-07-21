@@ -20,7 +20,7 @@ public abstract class Evento implements Comparable<Evento>{
 	public int compareTo(Evento e) {
 		if (this.getTempo() > e.getTempo()) {
 			return 1;
-		} else if (this.getTempo() == e.getTempo()) {
+		} else if (this.getTempo().equals(e.getTempo())) {
 			if (this.getPc().getDistancia() >= e.getPc().getDistancia()) {
 				return 1;
 			}
@@ -53,4 +53,9 @@ public abstract class Evento implements Comparable<Evento>{
 					"quadro: " + quadro +
 				"}";
 	}
+	
+	public void setTempo(Long tempo) {
+		this.tempo = tempo;
+	}
+
 }

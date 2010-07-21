@@ -28,11 +28,11 @@ public class Simulador {
 		
 		switch (cenario) {
 			case 1:
-				PC1.setP(1); // o correto Ž 40. O 4 foi somente para nao printar mta coisa por enquanto.
-				PC1.setA(new IntervaloChegadas(80*CONVERSAO_TEMPO, TipoDistribuicao.DETERMINISTICO));
+				PC1.setP(2); // o correto Ž 40. O 4 foi somente para nao printar mta coisa por enquanto.
+				PC1.setA(new IntervaloChegadas(8*CONVERSAO_TEMPO, TipoDistribuicao.DETERMINISTICO));
 				
 				PC2.setP(1); // o correto Ž 40. O 4 foi somente para nao printar mta coisa por enquanto.
-				PC2.setA(new IntervaloChegadas(80*CONVERSAO_TEMPO, TipoDistribuicao.DETERMINISTICO));
+				PC2.setA(new IntervaloChegadas(8*CONVERSAO_TEMPO, TipoDistribuicao.DETERMINISTICO));
 				
 				pcsConectados.add(PC1);
 				pcsConectados.add(PC2);
@@ -148,7 +148,7 @@ public class Simulador {
 	}
 	
 	private Evento executarFaseTransiente() {
-		//FIXME rever
+		//FIXME FASE TRANSIENTE
 		System.out.println("[Inicio da Fase Transiente]");		
 		for (PC pc : pcsConectados) {
 			pc.gerarMensagens(00,0);
