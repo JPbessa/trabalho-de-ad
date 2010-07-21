@@ -22,7 +22,9 @@ public class Quadro {
 		
 		if (eventoTransmissao.isTransmissaoImediata() || meioLivre(eventoTransmissao)){
 			
-			if (emissor.livre(eventoTransmissao, tempoFinalUltimaTransmissao) && !temColisaoTransmissao(eventoTransmissao)){
+			boolean temColisaoTransmissao = temColisaoTransmissao(eventoTransmissao);
+			
+			if (emissor.livre(eventoTransmissao, tempoFinalUltimaTransmissao) && !temColisaoTransmissao){
 					
 				//Evento eventoTransmissao = Simulador.filaEventos.pollFirst();
 				//emissor.getTx().setQuadroEnviado(emissor.getTx().getQuadros().remove(0));
@@ -47,7 +49,7 @@ public class Quadro {
 				
 				tempoFinalUltimaTransmissao = tempoEmissorHub + emissor.getTempoDeTransmissao();
 			}
-			else if (temColisaoTransmissao(eventoTransmissao)){
+			else if (temColisaoTransmissao){
 				
 				try {
 					numeroDeColisoes++;
