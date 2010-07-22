@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
 
+import model.Estatistica;
 import model.Evento;
 import model.IntervaloChegadas;
 import model.PC;
@@ -17,14 +18,14 @@ public class Simulador {
 	public static int velocidadeEthernet = (int)Math.pow(10, 7);
 	public static TreeSet<Evento> filaEventos = new TreeSet<Evento>();
 	public static HashMap<PC,List<Transmissao>> transmissoesAbertas = new HashMap<PC,List<Transmissao>>();
-	
+		
 	private static List<PC> pcsConectados = new ArrayList<PC>();
 	
 	private int numeroDeRodadas = 2;
 	private static int rodadaAtual = 1;
 	
 	private static final long CONVERSAO_TEMPO = 1000000;
-	
+		
 	public void executarCenario(int cenario) {
 
 		PC PC1 = new PC(100), PC2 = new PC(80), PC3 = new PC(60), PC4 = new PC(40);
@@ -107,12 +108,7 @@ public class Simulador {
 		
 		// inicio da simulacao - numeroDeRodadas tem a quantidade de execucoes
 		for (rodadaAtual = 1; rodadaAtual <= numeroDeRodadas; rodadaAtual++) {
-			 
-			// geracao de eventos antes do inicio da simulacao
-//			for (PC pc : pcsConectados) {
-//				pc.gerarMensagens(rodadaAtual * getTamanhoRodada() + getFaseTransiente(), rodadaAtual);
-//			}
-			
+			 			
 			// inicio da execucao dos eventos da rodada
 			Evento evento = primeiroEventoRodada;
 				
@@ -123,6 +119,7 @@ public class Simulador {
 				// Se o evento eh da proxima rodada
 				if (evento.getTempo() >= rodadaAtual * getTamanhoRodada() + getFaseTransiente()) {
 					primeiroEventoRodada = evento;
+					Estatistica.calcularMediaRodada();
 					break;
 				}
 				
@@ -171,13 +168,25 @@ public class Simulador {
 		}
 	}
 	
+	
 	private Evento executarFaseTransiente() {
-		//FIXME FASE TRANSIENTE
+		/*
+		 * Retorna o ultimo evento criado na analise da fase transiente.
+		 * 
+		 *  
+		 * 
+		 */
 		System.out.println("[Inicio da Fase Transiente]");		
+		
+		
+		
 		for (PC pc : pcsConectados) {
 			pc.gerarMensagens(00,0);
 		}
+		
+		
 		System.out.println("[Fim da Fase Transiente]");
+		
 		return filaEventos.first();
 	}
 
@@ -185,7 +194,7 @@ public class Simulador {
 		return new Long(0);
 	}
 
-	private Long getTamanhoRodada() {
+	public static Long getTamanhoRodada() {
 		return (long) Math.pow(10, 8);
 	}
 
