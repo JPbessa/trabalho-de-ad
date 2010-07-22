@@ -121,7 +121,7 @@ public class Simulador {
 				System.out.println("TEMPO: " + evento.getTempo());
 				
 				// Se o evento eh da proxima rodada
-				if (evento.getTempo() >= (rodadaAtual + 1) * getTamanhoRodada() + getFaseTransiente()) {
+				if (evento.getTempo() >= rodadaAtual * getTamanhoRodada() + getFaseTransiente()) {
 					primeiroEventoRodada = evento;
 					break;
 				}
