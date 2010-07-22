@@ -21,7 +21,7 @@ public class PC {
 	
 	private Vector<Double> tap;
 
-	private Transmissao transmissaoCorrente;
+	public Transmissao transmissaoCorrente;
 	
 	public PC(int distancia) {
 		this.distancia = distancia;

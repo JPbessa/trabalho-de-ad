@@ -1,20 +1,25 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
 
 import model.Evento;
 import model.IntervaloChegadas;
 import model.PC;
+import model.Recepcao;
 import model.TipoDistribuicao;
+import model.Transmissao;
 
 public class Simulador {
 	
 	public static int velocidadeEthernet = (int)Math.pow(10, 7);
 	public static TreeSet<Evento> filaEventos = new TreeSet<Evento>();
+	public static HashMap<PC,List<Transmissao>> transmissoesAbertas = new HashMap<PC,List<Transmissao>>();
 	
 	private static List<PC> pcsConectados = new ArrayList<PC>();
+	
 	private int numeroDeRodadas = 2;
 	private static int rodadaAtual = 1;
 	
@@ -29,10 +34,10 @@ public class Simulador {
 		switch (cenario) {
 			case 1:
 				PC1.setP(2); // o correto Ž 40. O 4 foi somente para nao printar mta coisa por enquanto.
-				PC1.setA(new IntervaloChegadas(8*CONVERSAO_TEMPO, TipoDistribuicao.DETERMINISTICO));
+				PC1.setA(new IntervaloChegadas(80*CONVERSAO_TEMPO, TipoDistribuicao.DETERMINISTICO));
 				
 				PC2.setP(1); // o correto Ž 40. O 4 foi somente para nao printar mta coisa por enquanto.
-				PC2.setA(new IntervaloChegadas(8*CONVERSAO_TEMPO, TipoDistribuicao.DETERMINISTICO));
+				PC2.setA(new IntervaloChegadas(80*CONVERSAO_TEMPO, TipoDistribuicao.DETERMINISTICO));
 				
 				pcsConectados.add(PC1);
 				pcsConectados.add(PC2);
@@ -122,14 +127,33 @@ public class Simulador {
 				}
 				
 				// FIXME ver se o evento eh da rodada para coleta de estatistica, passar rodada para evento.
-				evento.executar();
+				if (!evento.isColidido())
+					evento.executar();
+				
+				if (evento instanceof Transmissao && !evento.isColidido()) {
+					
+					for (PC comp: Simulador.pcsConectados) {
+						List<Transmissao> transmissoes = transmissoesAbertas.get(comp);
+						if (transmissoes == null) {
+							transmissoes = new ArrayList<Transmissao>();
+							transmissoesAbertas.put(comp,transmissoes);
+						}
+						transmissoes.add((Transmissao)evento);
+					}
+					
+				} else if (evento instanceof Recepcao && !evento.isColidido()) {
+					
+					List<Transmissao> transmissoes = transmissoesAbertas.get(evento.getPc());
+					transmissoes.remove(((Recepcao) evento).getTransmissao());
+					
+				}
 				
 				for (PC pc : pcsConectados) {
 					pc.gerarMensagens(evento.getTempo(), rodadaAtual);
 				}
 								
 				// Evento da proxima execucao (null se nao tiver mais eventos)
-				Evento proximoEvento = filaEventos.ceiling(evento); 
+				Evento proximoEvento = filaEventos.higher(evento); 
 				if (proximoEvento == null) {
 					int tam = filaEventos.size();
 					Long tempoAvancando = evento.getTempo();
@@ -139,7 +163,7 @@ public class Simulador {
 							pc.gerarMensagens(tempoAvancando, rodadaAtual);
 						}
 					}
-					evento = filaEventos.ceiling(evento);
+					evento = filaEventos.higher(evento);
 				} else {
 					evento = proximoEvento;
 				}
@@ -162,7 +186,7 @@ public class Simulador {
 	}
 
 	private Long getTamanhoRodada() {
-		return new Long(10000000);
+		return (long) Math.pow(10, 8);
 	}
 
 	public static List<PC> getPcsConectados() {

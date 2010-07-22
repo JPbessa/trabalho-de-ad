@@ -6,12 +6,15 @@ public abstract class Evento implements Comparable<Evento>{
 	private int rodada;
 	private PC pc;
 	private Quadro quadro;
+	private long id;
+	private static long uid;
 	
 	public Evento(Long tempo, int rodada, PC pc, Quadro quadro){
 		this.tempo = tempo;
 		this.rodada = rodada;
 		this.pc = pc;
 		this.quadro = quadro;
+		this.id = uid++;
 	}
 	
 	public abstract void executar();
@@ -21,13 +24,19 @@ public abstract class Evento implements Comparable<Evento>{
 		if (this.getTempo() > e.getTempo()) {
 			return 1;
 		} else if (this.getTempo().equals(e.getTempo())) {
-			if (this.getPc().getDistancia() >= e.getPc().getDistancia()) {
+			if (this.getId() > e.getId()){
 				return 1;
+			}else if (this.getId() == e.getId()){
+				return 0;
 			}
 		}
 		return -1;
 	}
 	
+	public long getId() {
+		return id;
+	}
+
 	public Long getTempo(){
 		return tempo;
 	}
@@ -57,5 +66,7 @@ public abstract class Evento implements Comparable<Evento>{
 	public void setTempo(Long tempo) {
 		this.tempo = tempo;
 	}
+
+	public abstract boolean isColidido();
 
 }

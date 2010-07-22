@@ -1,7 +1,8 @@
 package model;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Random;
-import java.util.TreeSet;
 
 import model.exception.QuadroDescartadoException;
 import controller.Simulador;
@@ -40,7 +41,7 @@ public class Quadro {
 					
 					Long tempo = tempoEmissorHub + tempoHubReceptor;
 					
-					Evento novoEvento = new Recepcao(tempo, eventoTransmissao.getRodada(), pc, this);
+					Evento novoEvento = new Recepcao(tempo, eventoTransmissao.getRodada(), pc, this, eventoTransmissao);
 					Simulador.filaEventos.add(novoEvento);
 					
 					System.out.println("Evento de Recepcao adicionado a fila: " + novoEvento);
@@ -52,15 +53,11 @@ public class Quadro {
 			else if (temColisaoTransmissao){
 				
 				try {
-					numeroDeColisoes++;
-					System.out.println("COLIDIU! quadro - " + eventoTransmissao.getQuadro().hashCode());
-					Long tempoAdicional = eventoTransmissao.getTempo() + binaryBackoff();
-					Evento novoEvento = new Transmissao(tempoAdicional, eventoTransmissao.getRodada(), emissor, this, true);
-					System.out.println("Tempo futuro " + tempoAdicional);
-					Simulador.filaEventos.add(novoEvento);	
+					tratarColisao(eventoTransmissao);	
+					eventoTransmissao.setColidido(true);
 				} catch (QuadroDescartadoException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					this.emissor.transmissaoCorrente = null;
+					System.out.println("Quadro descartado: " + this);
 				}
 						
 			}	
@@ -75,6 +72,42 @@ public class Quadro {
 		}
 		
 		return 0; //FIXME
+	}
+
+	public void tratarColisao(Evento evento) throws QuadroDescartadoException {
+		
+		numeroDeColisoes++;
+		
+		System.out.println("COLIDIU! Quadro: " + this.hashCode() + ", PC: " + emissor);
+		
+		//FIXME tempoAdicional deve ser Tempo da Colisão + binaryBackOff
+		Long tempoAdicional = evento.getTempo() + binaryBackoff();
+	
+		Evento novoEvento = new Transmissao(tempoAdicional, evento.getRodada(), emissor, this, true);
+		System.out.println("Tempo futuro " + tempoAdicional);
+		Simulador.filaEventos.add(novoEvento);	
+		
+	}
+	
+	public void tratarColisaoRecepcao(Recepcao evento) throws QuadroDescartadoException {
+		
+		numeroDeColisoes++;
+		
+		System.out.println("COLIDIU! Quadro: " + evento.getTransmissao().getQuadro().hashCode() + ", PC: " + evento.getTransmissao().getPc());
+		
+		//FIXME tempoAdicional deve ser Tempo da Colisão + binaryBackOff
+		Long tempoAdicional = evento.getTransmissao().getTempo() + binaryBackoff();
+	
+		Evento novoEvento = new Transmissao(tempoAdicional, evento.getRodada(), evento.getTransmissao().getPc(), evento.getTransmissao().getQuadro(), true);
+				
+		System.out.println("Tempo futuro " + tempoAdicional);
+		Simulador.filaEventos.add(novoEvento);
+		
+		List<Transmissao> transmissoesEmissor = Simulador.transmissoesAbertas.get(evento.getTransmissao().getPc());
+		transmissoesEmissor.remove(((Recepcao) evento).getTransmissao());
+		
+		List<Transmissao> transmissoesReceptor = Simulador.transmissoesAbertas.get(evento.getPc());
+		transmissoesReceptor.remove(((Recepcao) evento).getTransmissao());
 	}
 	
 	private boolean meioLivre(Transmissao eventoTransmissao) {
@@ -128,30 +161,36 @@ public class Quadro {
 	public boolean temColisaoTransmissao(Transmissao eventoTransmissao){
 		
 		/*
-		 * Para todo evento de recepção que o emissor recebe
-		 * é verificado se o momento que o evento a ser transmitido
-		 * está entre o tempo que o evento de recepçao demora para ser recebido.
-		 * Se sim e esses eventos têm quadros diferentes, há colisão.
+		 * Se a transmissao atual estiver entre o inicio de uma transmissao e o fim da recepcao
+		 * do mesmo quadro para o computador da transmissao atual, ocorre uma colisao.
 		 */
 		
-		for (Evento evento : Simulador.filaEventos){
-			
-			//FIXME nao percorrer toda a lista
-			
-			if ((evento instanceof Recepcao) && (evento.getPc().equals(emissor))){
-				if (eventoTransmissao.getTempo() >= evento.getTempo() 
-						&& eventoTransmissao.getTempo() <= GeradorDados.gerarTempoFinalRecepcao((Recepcao)evento)){
-					
-					if (!evento.getQuadro().equals(eventoTransmissao.getQuadro())){
-						
-						return true;
+		List<Transmissao> transmissoesAbertas = Simulador.transmissoesAbertas.get(eventoTransmissao.getPc());
+		
+		if (transmissoesAbertas != null && !transmissoesAbertas.isEmpty()) {
+			for (Transmissao trans: transmissoesAbertas) {
+
+				Recepcao recp = trans.getRecepcoes().get(emissor);
+				if (recp!=null && !recp.getQuadro().equals(eventoTransmissao.getQuadro())){
+					if (!recp.isColidido()){
+						System.out.println("Quadros colididos: TX: " + eventoTransmissao.getQuadro() + ", RX: " + recp.getQuadro());
+						recp.setColidido(true);
+						try {
+							tratarColisaoRecepcao(recp);
+							if(transmissoesAbertas.isEmpty()) break;
+						} catch (QuadroDescartadoException e) {
+							System.out.println("Quadro descartado " + recp.getQuadro());
+						}
 					}
-						
 				}
+				
 			}
+			
+			return true;
 		}
 		
 		return false;
+		
 	}
 	
 	@Override
