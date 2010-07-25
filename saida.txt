@@ -660,3 +660,305 @@ NCm:	NaN	 colisoes/quadro
 NCm:	NaN	 colisoes/quadro
 NCm:	NaN	 colisoes/quadro
 
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+30	PC 100	E[TAp]	0.0
+Rodada: 30	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+

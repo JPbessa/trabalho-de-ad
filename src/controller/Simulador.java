@@ -26,6 +26,7 @@ public class Simulador {
 	private static List<PC> pcsConectados = new ArrayList<PC>();
 	
 	private int numeroDeRodadas = 30;
+	private Long tamanhoFaseTransiente = 30000000000l;
 	private static int rodadaAtual = 1;
 	
 	private static final long CONVERSAO_TEMPO = 1000000;
@@ -180,7 +181,8 @@ public class Simulador {
 			
 			evento = recuperarProximoEvento(evento);
 			
-			if (evento.getTempo() >= 30000000000l) {
+			if (evento.getTempo() >= tamanhoFaseTransiente) {
+				tamanhoFaseTransiente = evento.getTempo()-1;
 				System.out.println("[Fim da Fase Transiente]");
 				return evento;
 			}
@@ -228,7 +230,7 @@ public class Simulador {
 	}
 
 	private Long getFaseTransiente() {
-		return new Long(0);
+		return tamanhoFaseTransiente;
 	}
 
 	public static Long getTamanhoRodada() {
