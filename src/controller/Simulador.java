@@ -25,7 +25,7 @@ public class Simulador {
 		
 	private static List<PC> pcsConectados = new ArrayList<PC>();
 	
-	private int numeroDeRodadas = 30;
+	public static int numeroDeRodadas = 1;
 	private Long tamanhoFaseTransiente = 30000000000l;
 	private static int rodadaAtual = 1;
 	

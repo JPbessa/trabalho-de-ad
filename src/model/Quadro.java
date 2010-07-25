@@ -31,7 +31,7 @@ public class Quadro {
 					
 				//Evento eventoTransmissao = Simulador.filaEventos.pollFirst();
 				//emissor.getTx().setQuadroEnviado(emissor.getTx().getQuadros().remove(0));
-				System.out.println("Quadro " + this.hashCode() + " enviado!");
+				System.out.println("Quadro " + this.hashCode() + " enviado pelo PC " + eventoTransmissao.getPc());
 				
 				Long tempoEmissorHub = eventoTransmissao.getTempo() + 
 									   emissor.getTempoDeTransmissao() + 
@@ -139,7 +139,7 @@ public class Quadro {
 		// Coleta as estatisticas da rodada
 		//System.out.println("receber();");
 		System.out.println("Quadro " + this.toString() + " recebido! Evento:" + eventoRecepcao.toString());
-		emissor.enviarConfirmacao(this, eventoRecepcao.getTempo()+emissor.getTempoDeTransmissao());
+		emissor.enviarConfirmacao(eventoRecepcao, eventoRecepcao.getTempo()+emissor.getTempoDeTransmissao());
 		
 		//FIXME verificar se no intervalo entre getTempo e getTempo() + getTempoDeTransmissao(), nao ocorre colisao.
 		return 0;

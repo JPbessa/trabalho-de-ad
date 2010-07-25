@@ -13,6 +13,7 @@ public class PC {
 	private List<Mensagem> tx;
 	private double p;
 	private IntervaloChegadas A;
+	private int quadrosEnviados;
 	public final long tempoEntreQuadros = 9600; // em ns
 	public final long tempoDeTransmissao = (int) Math.pow(10, 5); // em ns
 	public final long tempoCriacaoUltimaTransmissao = 0;
@@ -65,6 +66,14 @@ public class PC {
 		this.A = a;
 	}
 	
+	public int getQuadrosEnviados() {
+		return quadrosEnviados;
+	}
+	
+	public void setQuadrosEnviados(int quadrosEnviados) {
+		this.quadrosEnviados = quadrosEnviados;
+	}
+	
 	public long getTempoDeTransmissao() {
 		return tempoDeTransmissao;
 	}
@@ -114,9 +123,12 @@ public class PC {
 		
 	}
 
-	public void enviarConfirmacao(Quadro quadro, long tempo) {
+	public void enviarConfirmacao(Recepcao recepcao, long tempo) {
 		
-		if(concluirEnvioQuadro(quadro))	criarEventoTransmissao(tempo);
+		if(concluirEnvioQuadro(recepcao.getQuadro())) {
+			quadrosEnviados++;
+			criarEventoTransmissao(tempo);
+		}
 		
 	}
 
