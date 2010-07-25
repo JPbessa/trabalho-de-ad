@@ -179,15 +179,27 @@ public class Simulador {
 				pc.gerarMensagens(evento.getTempo(), rodadaAtual);
 			}
 			
+			atualizarEstatisticasFaseTransiente(evento);
+			
 			evento = recuperarProximoEvento(evento);
 			
-			if (evento.getTempo() >= tamanhoFaseTransiente) {
+			if (sairFaseTransiente(evento)) {
 				tamanhoFaseTransiente = evento.getTempo()-1;
 				System.out.println("[Fim da Fase Transiente]");
 				return evento;
 			}
 		}
 		return null;
+	}
+
+	private void atualizarEstatisticasFaseTransiente(Evento evento) {
+		
+		
+		
+	}
+
+	private boolean sairFaseTransiente(Evento evento) {
+		return evento.getTempo() >= tamanhoFaseTransiente;
 	}
 
 	private Evento recuperarProximoEvento(Evento evento) {
