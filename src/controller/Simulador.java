@@ -25,14 +25,16 @@ public class Simulador {
 		
 	private static List<PC> pcsConectados = new ArrayList<PC>();
 	
-	public static int numeroDeRodadas = 1;
-	private Long tamanhoFaseTransiente = 30000000000l;
+	public static int numeroDeRodadas = 30;
 	private static int rodadaAtual = 1;
 	
 	private static final long CONVERSAO_TEMPO = 1000000;
 	
 	public static File saida = new File("saida.txt");
-		
+	
+	private Long tamanhoFaseTransiente = 30000000000l;
+	private HashMap<Long,Float> estatisticaFaseTransiente = new HashMap<Long,Float>();
+	
 	public void executarCenario(int cenario) throws IOException {
 		
 		PC PC1 = new PC(100), PC2 = new PC(80), PC3 = new PC(60), PC4 = new PC(40);
@@ -194,12 +196,56 @@ public class Simulador {
 
 	private void atualizarEstatisticasFaseTransiente(Evento evento) {
 		
+		// Divisão inteira
+		Long janela = (evento.getTempo() / getTamanhoRodada()) + 1;
 		
+		Long janelaProxEvento = (recuperarProximoEvento(evento).getTempo() / getTamanhoRodada()) + 1;
 		
+		if (!janela.equals(janelaProxEvento)) {
+			estatisticaFaseTransiente.put( janela, calcularEstatisticaJanela(evento) );
+		}
+	}
+
+	private Float calcularEstatisticaJanela(Evento ultimoEventoJanela) {
+		
+		int qtdQuadros = 0;
+		int qtdColisoes = 0;
+		
+		Long janelaAtual = (ultimoEventoJanela.getTempo() / getTamanhoRodada()) + 1;
+		
+		Evento evento = ultimoEventoJanela;
+		
+		while ( evento != null && (evento.getTempo()/getTamanhoRodada())+1 == janelaAtual) {
+			
+			// Calcula estatistica
+			if (evento instanceof Transmissao && !evento.isColidido()) {
+				qtdQuadros++;
+				qtdColisoes += evento.getQuadro().getNumeroDeColisoes();
+			}
+			
+			evento = filaEventos.lower(evento);
+		}
+		
+		return (float) qtdColisoes/qtdQuadros;
 	}
 
 	private boolean sairFaseTransiente(Evento evento) {
-		return evento.getTempo() >= tamanhoFaseTransiente;
+		
+		Long janelaAtual = (evento.getTempo() / getTamanhoRodada()) + 1;
+		
+		if (janelaAtual >= 4) {
+			
+			double mediaQuadrado = (Math.pow(estatisticaFaseTransiente.get(janelaAtual-1),2) + Math.pow(estatisticaFaseTransiente.get(janelaAtual-2),2) + Math.pow(estatisticaFaseTransiente.get(janelaAtual-3),2))/3;
+			
+			double mediaX = (estatisticaFaseTransiente.get(janelaAtual-1) + estatisticaFaseTransiente.get(janelaAtual-2) + estatisticaFaseTransiente.get(janelaAtual-3))/3;
+			
+			double var = mediaQuadrado - Math.pow(mediaX,2);
+			
+			return (var <= 0.001);
+			
+		} else {
+			return false;
+		}
 	}
 
 	private Evento recuperarProximoEvento(Evento evento) {
