@@ -40,10 +40,10 @@ public class Simulador {
 		
 		switch (cenario) {
 			case 1:
-				PC1.setP(40); // o correto Ž 40. O 4 foi somente para nao printar mta coisa por enquanto.
+				PC1.setP(40); // o correto Å½ 40. O 4 foi somente para nao printar mta coisa por enquanto.
 				PC1.setA(new IntervaloChegadas(80*CONVERSAO_TEMPO, TipoDistribuicao.DETERMINISTICO));
 				
-				PC2.setP(40); // o correto Ž 40. O 4 foi somente para nao printar mta coisa por enquanto.
+				PC2.setP(40); // o correto Å½ 40. O 4 foi somente para nao printar mta coisa por enquanto.
 				PC2.setA(new IntervaloChegadas(80*CONVERSAO_TEMPO, TipoDistribuicao.DETERMINISTICO));
 				
 				pcsConectados.add(PC1);
@@ -118,7 +118,7 @@ public class Simulador {
 		
 		// inicio da simulacao - numeroDeRodadas tem a quantidade de execucoes
 		for (rodadaAtual = 1; rodadaAtual <= numeroDeRodadas; rodadaAtual++) {
-			 			
+			
 			// inicio da execucao dos eventos da rodada
 			Evento evento = primeiroEventoRodada;
 				
@@ -139,23 +139,7 @@ public class Simulador {
 				if (!evento.isColidido())
 					evento.executar();
 				
-				if (evento instanceof Transmissao && !evento.isColidido()) {
-					
-					for (PC comp: Simulador.pcsConectados) {
-						List<Transmissao> transmissoes = transmissoesAbertas.get(comp);
-						if (transmissoes == null) {
-							transmissoes = new ArrayList<Transmissao>();
-							transmissoesAbertas.put(comp,transmissoes);
-						}
-						transmissoes.add((Transmissao)evento);
-					}
-					
-				} else if (evento instanceof Recepcao && !evento.isColidido()) {
-					
-					List<Transmissao> transmissoes = transmissoesAbertas.get(evento.getPc());
-					transmissoes.remove(((Recepcao) evento).getTransmissao());
-					
-				}
+				atualizarTransmissoesAbertas(evento);
 				
 				for (PC pc : pcsConectados) {
 					pc.gerarMensagens(evento.getTempo(), rodadaAtual);
@@ -184,22 +168,69 @@ public class Simulador {
 	private Evento executarFaseTransiente() {
 		/*
 		 * Retorna o ultimo evento criado na analise da fase transiente.
-		 * 
-		 *  
-		 * 
 		 */
 		System.out.println("[Inicio da Fase Transiente]");		
-		
-		
 		
 		for (PC pc : pcsConectados) {
 			pc.gerarMensagens(00,0);
 		}
 		
+		// inicio da execucao dos eventos da rodada
+		Evento evento = filaEventos.first();
+			
+		while (evento!=null){
+			
+			System.out.println("TEMPO DO EVENTO FASE TRANSIENTE: " + evento.getTempo() + " (" + evento.getClass() + ")");
+			
+			evento.executar();
+			
+			atualizarTransmissoesAbertas(evento);
+			
+			for (PC pc : pcsConectados) {
+				pc.gerarMensagens(evento.getTempo(), rodadaAtual);
+			}
+							
+			// Evento da proxima execucao (null se nao tiver mais eventos)
+			Evento proximoEvento = filaEventos.higher(evento); 
+			if (proximoEvento == null) {
+				int tam = filaEventos.size();
+				Long tempoAvancando = evento.getTempo();
+				while (filaEventos.size() == tam) {
+					tempoAvancando++;
+					for (PC pc : pcsConectados) {
+						pc.gerarMensagens(tempoAvancando, rodadaAtual);
+					}
+				}
+				evento = filaEventos.higher(evento);
+			} else {
+				evento = proximoEvento;
+			}
+		}
+		
 		
 		System.out.println("[Fim da Fase Transiente]");
 		
-		return filaEventos.first();
+		return null;
+	}
+
+	private void atualizarTransmissoesAbertas(Evento evento) {
+		if (evento instanceof Transmissao && !evento.isColidido()) {
+			
+			for (PC comp: Simulador.pcsConectados) {
+				List<Transmissao> transmissoes = transmissoesAbertas.get(comp);
+				if (transmissoes == null) {
+					transmissoes = new ArrayList<Transmissao>();
+					transmissoesAbertas.put(comp,transmissoes);
+				}
+				transmissoes.add((Transmissao)evento);
+			}
+			
+		} else if (evento instanceof Recepcao && !evento.isColidido()) {
+			
+			List<Transmissao> transmissoes = transmissoesAbertas.get(evento.getPc());
+			transmissoes.remove(((Recepcao) evento).getTransmissao());
+			
+		}
 	}
 
 	private Long getFaseTransiente() {
