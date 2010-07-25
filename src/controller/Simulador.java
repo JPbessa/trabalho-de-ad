@@ -179,11 +179,12 @@ public class Simulador {
 			}
 			
 			evento = recuperarProximoEvento(evento);
+			
+			if (evento.getTempo() >= 30000000000l) {
+				System.out.println("[Fim da Fase Transiente]");
+				return evento;
+			}
 		}
-		
-		
-		System.out.println("[Fim da Fase Transiente]");
-		
 		return null;
 	}
 
