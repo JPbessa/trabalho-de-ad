@@ -145,20 +145,7 @@ public class Simulador {
 				}
 								
 				// Evento da proxima execucao (null se nao tiver mais eventos)
-				Evento proximoEvento = filaEventos.higher(evento); 
-				if (proximoEvento == null) {
-					int tam = filaEventos.size();
-					Long tempoAvancando = evento.getTempo();
-					while (filaEventos.size() == tam) {
-						tempoAvancando++;
-						for (PC pc : pcsConectados) {
-							pc.gerarMensagens(tempoAvancando, rodadaAtual);
-						}
-					}
-					evento = filaEventos.higher(evento);
-				} else {
-					evento = proximoEvento;
-				}
+				evento = recuperarProximoEvento(evento);
 			}
 		}
 	}
@@ -174,6 +161,8 @@ public class Simulador {
 			pc.gerarMensagens(00,0);
 		}
 		
+		rodadaAtual = 0;
+		
 		// inicio da execucao dos eventos da rodada
 		Evento evento = filaEventos.first();
 			
@@ -188,28 +177,33 @@ public class Simulador {
 			for (PC pc : pcsConectados) {
 				pc.gerarMensagens(evento.getTempo(), rodadaAtual);
 			}
-							
-			// Evento da proxima execucao (null se nao tiver mais eventos)
-			Evento proximoEvento = filaEventos.higher(evento); 
-			if (proximoEvento == null) {
-				int tam = filaEventos.size();
-				Long tempoAvancando = evento.getTempo();
-				while (filaEventos.size() == tam) {
-					tempoAvancando++;
-					for (PC pc : pcsConectados) {
-						pc.gerarMensagens(tempoAvancando, rodadaAtual);
-					}
-				}
-				evento = filaEventos.higher(evento);
-			} else {
-				evento = proximoEvento;
-			}
+			
+			evento = recuperarProximoEvento(evento);
 		}
 		
 		
 		System.out.println("[Fim da Fase Transiente]");
 		
 		return null;
+	}
+
+	private Evento recuperarProximoEvento(Evento evento) {
+		
+		// Evento da proxima execucao (null se nao tiver mais eventos)
+		Evento proximoEvento = filaEventos.higher(evento); 
+		if (proximoEvento == null) {
+			int tam = filaEventos.size();
+			Long tempoAvancando = evento.getTempo();
+			while (filaEventos.size() == tam) {
+				tempoAvancando++;
+				for (PC pc : pcsConectados) {
+					pc.gerarMensagens(tempoAvancando, rodadaAtual);
+				}
+			}
+			return filaEventos.higher(evento);
+		} else {
+			return proximoEvento;
+		}
 	}
 
 	private void atualizarTransmissoesAbertas(Evento evento) {
