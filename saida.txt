@@ -1,0 +1,662 @@
+RODADA 1:
+
+Rodada: 1	PC 100	E[TAp] = 0.0
+Rodada: 1	PC 80	E[TAp] = 0.0
+Rodada: 1	PC 60	E[TAp] = NaN
+Rodada: 1	PC 40	E[TAp] = NaN
+Rodada: 1	PC 100	E[TAm] = 0.0
+Rodada: 1	PC 80	E[TAm] = 0.0
+Rodada: 1	PC 60	E[TAm] = NaN
+Rodada: 1	PC 40	E[TAm] = NaN
+NCm:	0.029166667	 colisoes/quadro
+NCm:	0.14814815	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 2:
+
+Rodada: 2	PC 100	E[TAp] = 0.0
+Rodada: 2	PC 80	E[TAp] = NaN
+Rodada: 2	PC 60	E[TAp] = NaN
+Rodada: 2	PC 40	E[TAp] = NaN
+Rodada: 2	PC 100	E[TAm] = 0.0
+Rodada: 2	PC 80	E[TAm] = NaN
+Rodada: 2	PC 60	E[TAm] = NaN
+Rodada: 2	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 3:
+
+Rodada: 3	PC 100	E[TAp] = 0.0
+Rodada: 3	PC 80	E[TAp] = NaN
+Rodada: 3	PC 60	E[TAp] = NaN
+Rodada: 3	PC 40	E[TAp] = NaN
+Rodada: 3	PC 100	E[TAm] = 0.0
+Rodada: 3	PC 80	E[TAm] = NaN
+Rodada: 3	PC 60	E[TAm] = NaN
+Rodada: 3	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 4:
+
+Rodada: 4	PC 100	E[TAp] = 0.0
+Rodada: 4	PC 80	E[TAp] = NaN
+Rodada: 4	PC 60	E[TAp] = NaN
+Rodada: 4	PC 40	E[TAp] = NaN
+Rodada: 4	PC 100	E[TAm] = 0.0
+Rodada: 4	PC 80	E[TAm] = NaN
+Rodada: 4	PC 60	E[TAm] = NaN
+Rodada: 4	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 5:
+
+Rodada: 5	PC 100	E[TAp] = 0.0
+Rodada: 5	PC 80	E[TAp] = NaN
+Rodada: 5	PC 60	E[TAp] = NaN
+Rodada: 5	PC 40	E[TAp] = NaN
+Rodada: 5	PC 100	E[TAm] = 0.0
+Rodada: 5	PC 80	E[TAm] = NaN
+Rodada: 5	PC 60	E[TAm] = NaN
+Rodada: 5	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 6:
+
+Rodada: 6	PC 100	E[TAp] = 0.0
+Rodada: 6	PC 80	E[TAp] = NaN
+Rodada: 6	PC 60	E[TAp] = NaN
+Rodada: 6	PC 40	E[TAp] = NaN
+Rodada: 6	PC 100	E[TAm] = 0.0
+Rodada: 6	PC 80	E[TAm] = NaN
+Rodada: 6	PC 60	E[TAm] = NaN
+Rodada: 6	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 7:
+
+Rodada: 7	PC 100	E[TAp] = 0.0
+Rodada: 7	PC 80	E[TAp] = NaN
+Rodada: 7	PC 60	E[TAp] = NaN
+Rodada: 7	PC 40	E[TAp] = NaN
+Rodada: 7	PC 100	E[TAm] = 0.0
+Rodada: 7	PC 80	E[TAm] = NaN
+Rodada: 7	PC 60	E[TAm] = NaN
+Rodada: 7	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 8:
+
+Rodada: 8	PC 100	E[TAp] = 0.0
+Rodada: 8	PC 80	E[TAp] = NaN
+Rodada: 8	PC 60	E[TAp] = NaN
+Rodada: 8	PC 40	E[TAp] = NaN
+Rodada: 8	PC 100	E[TAm] = 0.0
+Rodada: 8	PC 80	E[TAm] = NaN
+Rodada: 8	PC 60	E[TAm] = NaN
+Rodada: 8	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 9:
+
+Rodada: 9	PC 100	E[TAp] = 0.0
+Rodada: 9	PC 80	E[TAp] = NaN
+Rodada: 9	PC 60	E[TAp] = NaN
+Rodada: 9	PC 40	E[TAp] = NaN
+Rodada: 9	PC 100	E[TAm] = 0.0
+Rodada: 9	PC 80	E[TAm] = NaN
+Rodada: 9	PC 60	E[TAm] = NaN
+Rodada: 9	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 10:
+
+Rodada: 10	PC 100	E[TAp] = 0.0
+Rodada: 10	PC 80	E[TAp] = NaN
+Rodada: 10	PC 60	E[TAp] = NaN
+Rodada: 10	PC 40	E[TAp] = NaN
+Rodada: 10	PC 100	E[TAm] = 0.0
+Rodada: 10	PC 80	E[TAm] = NaN
+Rodada: 10	PC 60	E[TAm] = NaN
+Rodada: 10	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 11:
+
+Rodada: 11	PC 100	E[TAp] = 0.0
+Rodada: 11	PC 80	E[TAp] = NaN
+Rodada: 11	PC 60	E[TAp] = NaN
+Rodada: 11	PC 40	E[TAp] = NaN
+Rodada: 11	PC 100	E[TAm] = 0.0
+Rodada: 11	PC 80	E[TAm] = NaN
+Rodada: 11	PC 60	E[TAm] = NaN
+Rodada: 11	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 12:
+
+Rodada: 12	PC 100	E[TAp] = 0.0
+Rodada: 12	PC 80	E[TAp] = NaN
+Rodada: 12	PC 60	E[TAp] = NaN
+Rodada: 12	PC 40	E[TAp] = NaN
+Rodada: 12	PC 100	E[TAm] = 0.0
+Rodada: 12	PC 80	E[TAm] = NaN
+Rodada: 12	PC 60	E[TAm] = NaN
+Rodada: 12	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 13:
+
+Rodada: 13	PC 100	E[TAp] = 0.0
+Rodada: 13	PC 80	E[TAp] = NaN
+Rodada: 13	PC 60	E[TAp] = NaN
+Rodada: 13	PC 40	E[TAp] = NaN
+Rodada: 13	PC 100	E[TAm] = 0.0
+Rodada: 13	PC 80	E[TAm] = NaN
+Rodada: 13	PC 60	E[TAm] = NaN
+Rodada: 13	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 14:
+
+Rodada: 14	PC 100	E[TAp] = 0.0
+Rodada: 14	PC 80	E[TAp] = NaN
+Rodada: 14	PC 60	E[TAp] = NaN
+Rodada: 14	PC 40	E[TAp] = NaN
+Rodada: 14	PC 100	E[TAm] = 0.0
+Rodada: 14	PC 80	E[TAm] = NaN
+Rodada: 14	PC 60	E[TAm] = NaN
+Rodada: 14	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 15:
+
+Rodada: 15	PC 100	E[TAp] = 0.0
+Rodada: 15	PC 80	E[TAp] = NaN
+Rodada: 15	PC 60	E[TAp] = NaN
+Rodada: 15	PC 40	E[TAp] = NaN
+Rodada: 15	PC 100	E[TAm] = 0.0
+Rodada: 15	PC 80	E[TAm] = NaN
+Rodada: 15	PC 60	E[TAm] = NaN
+Rodada: 15	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 16:
+
+Rodada: 16	PC 100	E[TAp] = 0.0
+Rodada: 16	PC 80	E[TAp] = NaN
+Rodada: 16	PC 60	E[TAp] = NaN
+Rodada: 16	PC 40	E[TAp] = NaN
+Rodada: 16	PC 100	E[TAm] = 0.0
+Rodada: 16	PC 80	E[TAm] = NaN
+Rodada: 16	PC 60	E[TAm] = NaN
+Rodada: 16	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 17:
+
+Rodada: 17	PC 100	E[TAp] = 0.0
+Rodada: 17	PC 80	E[TAp] = NaN
+Rodada: 17	PC 60	E[TAp] = NaN
+Rodada: 17	PC 40	E[TAp] = NaN
+Rodada: 17	PC 100	E[TAm] = 0.0
+Rodada: 17	PC 80	E[TAm] = NaN
+Rodada: 17	PC 60	E[TAm] = NaN
+Rodada: 17	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 18:
+
+Rodada: 18	PC 100	E[TAp] = 0.0
+Rodada: 18	PC 80	E[TAp] = NaN
+Rodada: 18	PC 60	E[TAp] = NaN
+Rodada: 18	PC 40	E[TAp] = NaN
+Rodada: 18	PC 100	E[TAm] = 0.0
+Rodada: 18	PC 80	E[TAm] = NaN
+Rodada: 18	PC 60	E[TAm] = NaN
+Rodada: 18	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 19:
+
+Rodada: 19	PC 100	E[TAp] = 0.0
+Rodada: 19	PC 80	E[TAp] = NaN
+Rodada: 19	PC 60	E[TAp] = NaN
+Rodada: 19	PC 40	E[TAp] = NaN
+Rodada: 19	PC 100	E[TAm] = 0.0
+Rodada: 19	PC 80	E[TAm] = NaN
+Rodada: 19	PC 60	E[TAm] = NaN
+Rodada: 19	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 20:
+
+Rodada: 20	PC 100	E[TAp] = 0.0
+Rodada: 20	PC 80	E[TAp] = NaN
+Rodada: 20	PC 60	E[TAp] = NaN
+Rodada: 20	PC 40	E[TAp] = NaN
+Rodada: 20	PC 100	E[TAm] = 0.0
+Rodada: 20	PC 80	E[TAm] = NaN
+Rodada: 20	PC 60	E[TAm] = NaN
+Rodada: 20	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 21:
+
+Rodada: 21	PC 100	E[TAp] = 0.0
+Rodada: 21	PC 80	E[TAp] = NaN
+Rodada: 21	PC 60	E[TAp] = NaN
+Rodada: 21	PC 40	E[TAp] = NaN
+Rodada: 21	PC 100	E[TAm] = 0.0
+Rodada: 21	PC 80	E[TAm] = NaN
+Rodada: 21	PC 60	E[TAm] = NaN
+Rodada: 21	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 22:
+
+Rodada: 22	PC 100	E[TAp] = 0.0
+Rodada: 22	PC 80	E[TAp] = NaN
+Rodada: 22	PC 60	E[TAp] = NaN
+Rodada: 22	PC 40	E[TAp] = NaN
+Rodada: 22	PC 100	E[TAm] = 0.0
+Rodada: 22	PC 80	E[TAm] = NaN
+Rodada: 22	PC 60	E[TAm] = NaN
+Rodada: 22	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 23:
+
+Rodada: 23	PC 100	E[TAp] = 0.0
+Rodada: 23	PC 80	E[TAp] = NaN
+Rodada: 23	PC 60	E[TAp] = NaN
+Rodada: 23	PC 40	E[TAp] = NaN
+Rodada: 23	PC 100	E[TAm] = 0.0
+Rodada: 23	PC 80	E[TAm] = NaN
+Rodada: 23	PC 60	E[TAm] = NaN
+Rodada: 23	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 24:
+
+Rodada: 24	PC 100	E[TAp] = 0.0
+Rodada: 24	PC 80	E[TAp] = NaN
+Rodada: 24	PC 60	E[TAp] = NaN
+Rodada: 24	PC 40	E[TAp] = NaN
+Rodada: 24	PC 100	E[TAm] = 0.0
+Rodada: 24	PC 80	E[TAm] = NaN
+Rodada: 24	PC 60	E[TAm] = NaN
+Rodada: 24	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 25:
+
+Rodada: 25	PC 100	E[TAp] = 0.0
+Rodada: 25	PC 80	E[TAp] = NaN
+Rodada: 25	PC 60	E[TAp] = NaN
+Rodada: 25	PC 40	E[TAp] = NaN
+Rodada: 25	PC 100	E[TAm] = 0.0
+Rodada: 25	PC 80	E[TAm] = NaN
+Rodada: 25	PC 60	E[TAm] = NaN
+Rodada: 25	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 26:
+
+Rodada: 26	PC 100	E[TAp] = 0.0
+Rodada: 26	PC 80	E[TAp] = NaN
+Rodada: 26	PC 60	E[TAp] = NaN
+Rodada: 26	PC 40	E[TAp] = NaN
+Rodada: 26	PC 100	E[TAm] = 0.0
+Rodada: 26	PC 80	E[TAm] = NaN
+Rodada: 26	PC 60	E[TAm] = NaN
+Rodada: 26	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 27:
+
+Rodada: 27	PC 100	E[TAp] = 0.0
+Rodada: 27	PC 80	E[TAp] = NaN
+Rodada: 27	PC 60	E[TAp] = NaN
+Rodada: 27	PC 40	E[TAp] = NaN
+Rodada: 27	PC 100	E[TAm] = 0.0
+Rodada: 27	PC 80	E[TAm] = NaN
+Rodada: 27	PC 60	E[TAm] = NaN
+Rodada: 27	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 28:
+
+Rodada: 28	PC 100	E[TAp] = 0.0
+Rodada: 28	PC 80	E[TAp] = NaN
+Rodada: 28	PC 60	E[TAp] = NaN
+Rodada: 28	PC 40	E[TAp] = NaN
+Rodada: 28	PC 100	E[TAm] = 0.0
+Rodada: 28	PC 80	E[TAm] = NaN
+Rodada: 28	PC 60	E[TAm] = NaN
+Rodada: 28	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 29:
+
+Rodada: 29	PC 100	E[TAp] = 0.0
+Rodada: 29	PC 80	E[TAp] = NaN
+Rodada: 29	PC 60	E[TAp] = NaN
+Rodada: 29	PC 40	E[TAp] = NaN
+Rodada: 29	PC 100	E[TAm] = 0.0
+Rodada: 29	PC 80	E[TAm] = NaN
+Rodada: 29	PC 60	E[TAm] = NaN
+Rodada: 29	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+RODADA 30:
+
+Rodada: 30	PC 100	E[TAp] = 0.0
+Rodada: 30	PC 80	E[TAp] = NaN
+Rodada: 30	PC 60	E[TAp] = NaN
+Rodada: 30	PC 40	E[TAp] = NaN
+Rodada: 30	PC 100	E[TAm] = 0.0
+Rodada: 30	PC 80	E[TAm] = NaN
+Rodada: 30	PC 60	E[TAm] = NaN
+Rodada: 30	PC 40	E[TAm] = NaN
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+1	PC 100	E[TAp]	0.0
+1	PC 80	E[TAp]	0.0
+Rodada: 1	PC 100	E[TAm]	0.0
+Rodada: 1	PC 80	E[TAm]	0.0
+NCm:	0.004166667	 colisoes/quadro
+NCm:	4.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+2	PC 100	E[TAp]	0.0
+Rodada: 2	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+3	PC 100	E[TAp]	0.0
+Rodada: 3	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+4	PC 100	E[TAp]	0.0
+Rodada: 4	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+5	PC 100	E[TAp]	0.0
+Rodada: 5	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+6	PC 100	E[TAp]	0.0
+Rodada: 6	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+7	PC 100	E[TAp]	0.0
+Rodada: 7	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+8	PC 100	E[TAp]	0.0
+Rodada: 8	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+9	PC 100	E[TAp]	0.0
+Rodada: 9	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+10	PC 100	E[TAp]	0.0
+Rodada: 10	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+11	PC 100	E[TAp]	0.0
+Rodada: 11	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+12	PC 100	E[TAp]	0.0
+Rodada: 12	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+13	PC 100	E[TAp]	0.0
+Rodada: 13	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+14	PC 100	E[TAp]	0.0
+Rodada: 14	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+15	PC 100	E[TAp]	0.0
+Rodada: 15	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+16	PC 100	E[TAp]	0.0
+Rodada: 16	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+17	PC 100	E[TAp]	0.0
+Rodada: 17	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+18	PC 100	E[TAp]	0.0
+Rodada: 18	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+19	PC 100	E[TAp]	0.0
+Rodada: 19	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+20	PC 100	E[TAp]	0.0
+Rodada: 20	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+21	PC 100	E[TAp]	0.0
+Rodada: 21	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+22	PC 100	E[TAp]	0.0
+Rodada: 22	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+23	PC 100	E[TAp]	0.0
+Rodada: 23	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+24	PC 100	E[TAp]	0.0
+Rodada: 24	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+25	PC 100	E[TAp]	0.0
+Rodada: 25	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+26	PC 100	E[TAp]	0.0
+Rodada: 26	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+27	PC 100	E[TAp]	0.0
+Rodada: 27	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+28	PC 100	E[TAp]	0.0
+Rodada: 28	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+29	PC 100	E[TAp]	0.0
+Rodada: 29	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+
+30	PC 100	E[TAp]	0.0
+Rodada: 30	PC 100	E[TAm]	0.0
+NCm:	0.0	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+NCm:	NaN	 colisoes/quadro
+

@@ -10,6 +10,9 @@ public abstract class Evento implements Comparable<Evento>{
 	private static long uid;
 	
 	public Evento(Long tempo, int rodada, PC pc, Quadro quadro){
+		
+		assert(quadro!=null);
+		
 		this.tempo = tempo;
 		this.rodada = rodada;
 		this.pc = pc;

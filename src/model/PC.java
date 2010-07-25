@@ -127,11 +127,13 @@ public class PC {
 		confirmacoes++;
 		
 		if(confirmacoes == Simulador.getPcsConectados().size()){
-			tx.get(0).getQuadros().remove(quadro);
+			
+//			tx.get(0).getQuadros().remove(quadro);
+			tx.get(0).getQuadrosEnviados().add(quadro);
 			transmissaoCorrente = null;
 			
 			// Se acabaram os quadros da mensagem, remova a mesma
-			if (tx.get(0).getQuadros().isEmpty()) {
+			if (tx.get(0).getQuadros().size() == tx.get(0).getQuadrosEnviados().size()) {
 				tx.remove(0);
 			}
 			b = true;
@@ -147,7 +149,16 @@ public class PC {
 			// verifica se o evento deve ser criado com o tempo de criação da mensagem ou com o tempo atual
 			long tempoCriacaoEvento = (tempo > tx.get(0).getTempoCriacao()) ? tempo : tx.get(0).getTempoCriacao();  
 			
-			Transmissao evento = new Transmissao(tempoCriacaoEvento, Simulador.getRodadaAtual(), this, tx.get(0).getQuadros().get(0));
+			// Seleciona o próximo quadro a ser enviado
+			Quadro proxQuadro = null;
+			for (Quadro quadro: tx.get(0).getQuadros()) {
+				if (!tx.get(0).getQuadrosEnviados().contains(quadro)) {
+					proxQuadro = quadro;
+				}
+			}
+			
+//			Transmissao evento = new Transmissao(tempoCriacaoEvento, Simulador.getRodadaAtual(), this, tx.get(0).getQuadros().get(0) );
+			Transmissao evento = new Transmissao(tempoCriacaoEvento, Simulador.getRodadaAtual(), this, proxQuadro );
 			Simulador.filaEventos.add(evento);
 			confirmacoes = 0;
 			System.out.println("Evento transmissao: " + evento);

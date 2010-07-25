@@ -1,5 +1,9 @@
 package controller;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,23 +25,25 @@ public class Simulador {
 		
 	private static List<PC> pcsConectados = new ArrayList<PC>();
 	
-	private int numeroDeRodadas = 2;
+	private int numeroDeRodadas = 30;
 	private static int rodadaAtual = 1;
 	
 	private static final long CONVERSAO_TEMPO = 1000000;
+	
+	public static File saida = new File("saida.txt");
 		
-	public void executarCenario(int cenario) {
-
+	public void executarCenario(int cenario) throws IOException {
+		
 		PC PC1 = new PC(100), PC2 = new PC(80), PC3 = new PC(60), PC4 = new PC(40);
 		
 		System.out.println("Executando cenario " + cenario + "...");
 		
 		switch (cenario) {
 			case 1:
-				PC1.setP(2); // o correto Ž 40. O 4 foi somente para nao printar mta coisa por enquanto.
+				PC1.setP(40); // o correto Ž 40. O 4 foi somente para nao printar mta coisa por enquanto.
 				PC1.setA(new IntervaloChegadas(80*CONVERSAO_TEMPO, TipoDistribuicao.DETERMINISTICO));
 				
-				PC2.setP(1); // o correto Ž 40. O 4 foi somente para nao printar mta coisa por enquanto.
+				PC2.setP(40); // o correto Ž 40. O 4 foi somente para nao printar mta coisa por enquanto.
 				PC2.setA(new IntervaloChegadas(80*CONVERSAO_TEMPO, TipoDistribuicao.DETERMINISTICO));
 				
 				pcsConectados.add(PC1);
@@ -98,6 +104,10 @@ public class Simulador {
 				System.exit(0);
 				break;
 		}
+		// Iniciando cabecalho do arquivo
+		PrintWriter writer = new PrintWriter( new FileWriter(saida,true) );
+		writer.println("RODADA\tPC\tMEDIA\tVALOR");
+		writer.println();
 		
 		iniciarSimulacao();
 	}
@@ -118,8 +128,10 @@ public class Simulador {
 				
 				// Se o evento eh da proxima rodada
 				if (evento.getTempo() >= rodadaAtual * getTamanhoRodada() + getFaseTransiente()) {
+					
+					Estatistica.calcularEstatisticas(primeiroEventoRodada);
+					
 					primeiroEventoRodada = evento;
-					Estatistica.calcularMediaRodada();
 					break;
 				}
 				
@@ -195,7 +207,7 @@ public class Simulador {
 	}
 
 	public static Long getTamanhoRodada() {
-		return (long) Math.pow(10, 8);
+		return (long) Math.pow(10, 9);
 	}
 
 	public static List<PC> getPcsConectados() {

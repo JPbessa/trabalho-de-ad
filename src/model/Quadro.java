@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -12,11 +11,14 @@ public class Quadro {
 	public static final int tamanho = 1000;
 	private PC emissor;
 	private int numeroDeColisoes = 0;
+
 	private long tempoFinalUltimaTransmissao = 0;
+	private Mensagem mensagem;
 	
 	public Quadro(Mensagem msg) {
 		this.emissor = msg.getEmissor();
-		msg.setQuadro(this);	
+		msg.setQuadro(this);
+		this.mensagem = msg;
 	}
 	
 	public long transmitir(Transmissao eventoTransmissao) {
@@ -53,7 +55,7 @@ public class Quadro {
 			else if (temColisaoTransmissao){
 				
 				try {
-					tratarColisao(eventoTransmissao);	
+					tratarColisao(eventoTransmissao);
 					eventoTransmissao.setColidido(true);
 				} catch (QuadroDescartadoException e) {
 					this.emissor.transmissaoCorrente = null;
@@ -196,5 +198,13 @@ public class Quadro {
 	@Override
 	public String toString() {
 		return "" + this.hashCode() ;
+	}
+	
+	public Mensagem getMensagem() {
+		return mensagem;
+	}
+	
+	public int getNumeroDeColisoes() {
+		return numeroDeColisoes;
 	}
 }

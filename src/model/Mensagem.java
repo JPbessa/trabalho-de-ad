@@ -7,7 +7,7 @@ public class Mensagem {
 	
 	private List<Quadro> quadros = new ArrayList<Quadro>();
 	private List<Quadro> quadrosEnviados = new ArrayList<Quadro>();
-	
+
 	private int numeroDeQuadros = 0;
 	
 	private PC emissor;
@@ -24,11 +24,11 @@ public class Mensagem {
 		geraQuadros();
 	}
 	
-	public void transmitir() {
-		for (Quadro quadro : quadros) {
-			//emissor.setTap(quadro.transmitir());
-		}
-	}
+//	public void transmitir() {
+//		for (Quadro quadro : quadros) {
+//			//emissor.setTap(quadro.transmitir());
+//		}
+//	}
 	
 	private boolean geraQuadros() {
 		for(int i=0; i < numeroDeQuadros; i++) new Quadro(this);
@@ -62,5 +62,9 @@ public class Mensagem {
 	@Override
 	public String toString() {
 		return "t=" + tempoCriacao + "," + "#quadros=" + numeroDeQuadros + ", pc=" + emissor;
+	}
+	
+	public List<Quadro> getQuadrosEnviados() {
+		return quadrosEnviados;
 	}
 }
