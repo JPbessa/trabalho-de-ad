@@ -136,8 +136,7 @@ public class Simulador {
 				}
 				
 				// FIXME ver se o evento eh da rodada para coleta de estatistica, passar rodada para evento.
-				if (!evento.isColidido())
-					evento.executar();
+				evento.executar();
 				
 				atualizarTransmissoesAbertas(evento);
 				

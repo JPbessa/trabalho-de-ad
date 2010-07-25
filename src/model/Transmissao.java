@@ -21,7 +21,9 @@ public class Transmissao extends Evento {
 	
 	@Override
 	public void executar() {
-		getQuadro().transmitir(this);
+		if (!isColidido()){
+			getQuadro().transmitir(this);
+		}
 	}
 	
 	public boolean isTransmissaoImediata() {

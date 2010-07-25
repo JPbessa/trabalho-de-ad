@@ -1,9 +1,5 @@
 package model;
 
-import java.util.List;
-
-import model.exception.QuadroDescartadoException;
-import controller.Simulador;
 
 public class Recepcao extends Evento {
 	
@@ -19,15 +15,6 @@ public class Recepcao extends Evento {
 	public void executar() {
 		if (!isColidido()) {
 			getQuadro().receber(this);
-		} else {
-			try {
-				getQuadro().tratarColisao(this);
-//				List<Transmissao> transmissoes = Simulador.transmissoesAbertas.get(this.getPc());
-//				transmissoes.remove(this);
-			} catch (QuadroDescartadoException e) {
-				this.transmissao.getPc().transmissaoCorrente = null;
-				System.out.println("Quadro descartado: " + getQuadro());
-			}
 		}
 	}
 
