@@ -22,10 +22,10 @@ public class Estatistica {
 	
 	private static PrintWriter writer;
 	
-	private static Vector estatPC1 = new Vector();
-	private static Vector estatPC2 = new Vector();
-	private static Vector estatPC3 = new Vector();
-	private static Vector estatPC4 = new Vector();
+	private static Vector<Long> estatPC1 = new Vector<Long>();
+	private static Vector<Long> estatPC2 = new Vector<Long>();
+	private static Vector<Long> estatPC3 = new Vector<Long>();
+	private static Vector<Long> estatPC4 = new Vector<Long>();
 	
 	// Estruturas utilizadas no calculo do TAp
 	private static HashMap<Quadro,Transmissao> tap_transmissoesAbertas = new HashMap<Quadro,Transmissao>();
@@ -48,33 +48,35 @@ public class Estatistica {
 		
 		Evento evento = primeiroEventoRodada;
 		
-		while (evento != null && evento.getTempo() >= tempoInicialRodada && evento.getTempo() <= tempoFinalRodada) {
+		if (evento.getTempo() >= Simulador.tamanhoFaseTransiente) {
+			// A rodada atual no Simulador est‡ sempre na frente, pois esta rotina Ž executada depois.
+			while (evento != null && evento.getRodada() == rodadaAtual-1) {
+				
+				adicionarEstatisticaTAP(evento);
+				adicionarEstatisticaTAM(evento);
+				adicionarEstatisticaNCM(evento);
+				adicionarEstatisticaUtilizacao(evento);
+				
+				evento = Simulador.filaEventos.higher(evento);
+			}
 			
-			adicionarEstatisticaTAP(evento);
-			adicionarEstatisticaTAM(evento);
-			adicionarEstatisticaNCM(evento);
-			adicionarEstatisticaUtilizacao(evento);
-			
-			evento = Simulador.filaEventos.higher(evento);
+			try {
+				
+				writer = new PrintWriter( new FileWriter(Simulador.saida,true) );
+				
+				calcularTAP();
+				calcularTAM();
+				calcularNCM();
+				calcularUtilizacao();
+				calcularVazao();
+				
+				writer.flush();
+				writer.close();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		
-		try {
-			
-			writer = new PrintWriter( new FileWriter(Simulador.saida,true) );
-			
-			calcularTAP();
-			calcularTAM();
-			calcularNCM();
-			calcularUtilizacao();
-			calcularVazao();
-			
-			writer.flush();
-			writer.close();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
 	}
 	
 	private static void adicionarEstatisticaTAP(Evento evento) {
@@ -122,7 +124,6 @@ public class Estatistica {
 	}
 	
 	private static void calcularTAP() {
-		long tapTotal = 0;
 		int qtdQuad = 0;
 		for (Entry<Quadro, Long> reg: tap_valores.entrySet()) {
 			qtdQuad++;
@@ -151,7 +152,11 @@ public class Estatistica {
 		estatPC3.clear();
 		estatPC4.clear();
 		
-		System.out.println("TAp (Quadro=TAp): " + tap_valores);
+		Long soma = 0l;
+		for (Long valor : tap_valores.values()) {
+			soma += valor;
+		}
+		System.out.println("E[TAp] = " + (soma/tap_valores.size()));
 	}
 	
 	private static void adicionarEstatisticaTAM(Evento evento) {
@@ -198,24 +203,23 @@ public class Estatistica {
 	}
 	
 	private static void calcularTAM() {
-		long tamTotal = 0;
 		int qtdMsg = 0;
 		for (Entry<Mensagem,Long> reg: tam_valores.entrySet()) {
 			qtdMsg++;
 			switch(reg.getKey().getEmissor().getDistancia()){
-			case 100:
-				estatPC1.add(reg.getValue());
-				break;
-			case 80:
-				estatPC2.add(reg.getValue());
-				break;
-			case 60:
-				estatPC3.add(reg.getValue());
-				break;
-			case 40:
-				estatPC4.add(reg.getValue());
-				break;
-		}
+				case 100:
+					estatPC1.add(reg.getValue());
+					break;
+				case 80:
+					estatPC2.add(reg.getValue());
+					break;
+				case 60:
+					estatPC3.add(reg.getValue());
+					break;
+				case 40:
+					estatPC4.add(reg.getValue());
+					break;
+			}
 		}
 		if(!estatPC1.isEmpty()) writer.println("Rodada: " + Simulador.getRodadaAtual() + "\tPC 100\tE[TAm]\t" + ((float)somaTotal(estatPC1)/estatPC1.size()));
 		if(!estatPC2.isEmpty())writer.println("Rodada: " + Simulador.getRodadaAtual() + "\tPC 80\tE[TAm]\t" + ((float)somaTotal(estatPC2)/estatPC2.size()));
@@ -227,7 +231,13 @@ public class Estatistica {
 		estatPC3.clear();
 		estatPC4.clear();
 		
-		System.out.println("TAm (Mensagem=TAm): " + tam_valores);
+		Long soma = 0l;
+		
+		for (Long valor : tam_valores.values()) {
+			soma += valor;
+		}
+		
+		System.out.println("E[TAm] = " + (soma/tam_valores.size()));
 	}
 	
 	private static void adicionarEstatisticaNCM(Evento evento) {
@@ -263,25 +273,15 @@ public class Estatistica {
 	
 	private static void calcularNCM() {
 		
-		float mediaColisoesPC1 = (float) qtdColisoesPC1/qtdQuadrosPC1;
-		float mediaColisoesPC2 = (float) qtdColisoesPC2/qtdQuadrosPC2;
-		float mediaColisoesPC3 = (float) qtdColisoesPC3/qtdQuadrosPC3;
-		float mediaColisoesPC4 = (float) qtdColisoesPC4/qtdQuadrosPC4;
+		float mediaColisoesPC1 = qtdQuadrosPC1 > 0 ? (float) qtdColisoesPC1/qtdQuadrosPC1 : 0;
+		float mediaColisoesPC2 = qtdQuadrosPC2 > 0 ? (float) qtdColisoesPC2/qtdQuadrosPC2 : 0;
+		float mediaColisoesPC3 = qtdQuadrosPC3 > 0 ? (float) qtdColisoesPC3/qtdQuadrosPC3 : 0;
+		float mediaColisoesPC4 = qtdQuadrosPC4 > 0 ? (float) qtdColisoesPC4/qtdQuadrosPC4 : 0;
 		
-		writer.println("NCm:\t" + mediaColisoesPC1 + "\t colisoes/quadro");
-		writer.println("NCm:\t" + mediaColisoesPC2 + "\t colisoes/quadro");
-		writer.println("NCm:\t" + mediaColisoesPC3 + "\t colisoes/quadro");
-		writer.println("NCm:\t" + mediaColisoesPC4 + "\t colisoes/quadro");
-		writer.println();
-		
-		if (qtdQuadrosPC1 != 0 && qtdQuadrosPC2 != 0 && qtdQuadrosPC3 != 0 && qtdQuadrosPC4 != 0) {
-			System.out.println("NCm: " + mediaColisoesPC1 + " colisoes/quadro");
-			System.out.println("NCm: " + mediaColisoesPC2 + " colisoes/quadro");
-			System.out.println("NCm: " + mediaColisoesPC3 + " colisoes/quadro");
-			System.out.println("NCm: " + mediaColisoesPC4 + " colisoes/quadro");
-		} else {
-			System.out.println("Nao foi possivel calcular o NCm.");
-		}
+		System.out.println("NCm 1: " + mediaColisoesPC1 + " colisoes/quadro");
+		System.out.println("NCm 2: " + mediaColisoesPC2 + " colisoes/quadro");
+		System.out.println("NCm 3: " + mediaColisoesPC3 + " colisoes/quadro");
+		System.out.println("NCm 4: " + mediaColisoesPC4 + " colisoes/quadro");
 	}
 	
 	private static void adicionarEstatisticaUtilizacao(Evento evento) {
@@ -307,7 +307,7 @@ public class Estatistica {
 		}
 	}
 
-	private static float somaTotal(Vector estatPC) {
+	private static float somaTotal(Vector<Long> estatPC) {
 		
 		float total = 0;
 		

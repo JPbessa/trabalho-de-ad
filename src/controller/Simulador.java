@@ -32,7 +32,7 @@ public class Simulador {
 	
 	public static File saida = new File("saida.txt");
 	
-	private Long tamanhoFaseTransiente = 30000000000l;
+	public static Long tamanhoFaseTransiente = 30000000000l;
 	private HashMap<Long,Float> estatisticaFaseTransiente = new HashMap<Long,Float>();
 	
 	public void executarCenario(int cenario) throws IOException {
