@@ -56,16 +56,6 @@ public abstract class Evento implements Comparable<Evento>{
 		return quadro;
 	}
 	
-	@Override
-	public String toString() {
-		return "evento {" +
-					"tempo: " + tempo + ", " +
-					"rodada: " + rodada + ", " +
-					"pc: " + pc + ", " +
-					"quadro: " + quadro +
-				"}";
-	}
-	
 	public void setTempo(Long tempo) {
 		this.tempo = tempo;
 	}

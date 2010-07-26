@@ -45,5 +45,16 @@ public class Transmissao extends Evento {
 	public HashMap<PC,Recepcao> getRecepcoes() {
 		return recepcoes;
 	}
+	
+	@Override
+	public String toString() {
+		return "evento {" +
+					"tipo: Transmissao" + 
+					"tempo: " + getTempo() + ", " +
+					"rodada: " + getRodada() + ", " +
+					"pc: " + getPc() + ", " +
+					"quadro: " + getQuadro() +
+				"}";
+	}
 
 }

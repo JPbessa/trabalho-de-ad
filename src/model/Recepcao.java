@@ -34,5 +34,16 @@ public class Recepcao extends Evento {
 	public void setColidido(boolean colisao) {
 		this.transmissao.setColidido(colisao);
 	}
+	
+	@Override
+	public String toString() {
+		return "evento {" +
+					"tipo: Recepcao" + 
+					"tempo: " + getTempo() + ", " +
+					"rodada: " + getRodada() + ", " +
+					"pc: " + getPc() + ", " +
+					"quadro: " + getQuadro() +
+				"}";
+	}
 
 }
