@@ -161,7 +161,7 @@ public class PC {
 			Transmissao evento = new Transmissao(tempoCriacaoEvento, Simulador.getRodadaAtual(), this, proxQuadro );
 			Simulador.filaEventos.add(evento);
 			confirmacoes = 0;
-			System.out.println("Evento transmissao: " + evento);
+			System.out.println("Criado Evento transmissao: " + evento);
 			
 			transmissaoCorrente = evento;
 		}

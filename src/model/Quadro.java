@@ -59,6 +59,10 @@ public class Quadro {
 					eventoTransmissao.setColidido(true);
 				} catch (QuadroDescartadoException e) {
 					this.emissor.transmissaoCorrente = null;
+					for(Recepcao r : eventoTransmissao.getRecepcoes().values()){
+						Simulador.filaEventos.remove(r);
+					}
+					eventoTransmissao.getRecepcoes().clear();
 					System.out.println("Quadro descartado: " + this);
 				}
 						
@@ -78,12 +82,12 @@ public class Quadro {
 
 	public void tratarColisao(Evento evento) throws QuadroDescartadoException {
 		
-		numeroDeColisoes++;
+		evento.getQuadro().numeroDeColisoes++;
 		
-		System.out.println("COLIDIU! Quadro: " + this.hashCode() + ", PC: " + emissor);
+		System.out.println("COLIDIU! Quadro: " + this.hashCode() + ", PC: " + emissor +"NumColisoes (tratarColisao) =" + evento.getQuadro().numeroDeColisoes);
 		
 		//FIXME tempoAdicional deve ser Tempo da Colisão + binaryBackOff
-		Long tempoAdicional = evento.getTempo() + binaryBackoff();
+		Long tempoAdicional = evento.getTempo() + binaryBackoff(evento);
 	
 		Evento novoEvento = new Transmissao(tempoAdicional, evento.getRodada(), emissor, this, true);
 		System.out.println("Tempo futuro " + tempoAdicional);
@@ -93,12 +97,12 @@ public class Quadro {
 	
 	public void tratarColisaoRecepcao(Recepcao evento) throws QuadroDescartadoException {
 		
-		numeroDeColisoes++;
+		evento.getQuadro().numeroDeColisoes++;
 		
-		System.out.println("COLIDIU! Quadro: " + evento.getTransmissao().getQuadro().hashCode() + ", PC: " + evento.getTransmissao().getPc());
+		System.out.println("COLIDIU! Quadro: " + evento.getTransmissao().getQuadro().hashCode() + ", PC: " + evento.getTransmissao().getPc() + ", NumColisoes (tratarColisaoRecepcao) ="+ evento.getQuadro().numeroDeColisoes);
 		
 		//FIXME tempoAdicional deve ser Tempo da Colisão + binaryBackOff
-		Long tempoAdicional = evento.getTransmissao().getTempo() + binaryBackoff();
+		Long tempoAdicional = evento.getTransmissao().getTempo() + binaryBackoff(evento);
 	
 		Evento novoEvento = new Transmissao(tempoAdicional, evento.getRodada(), evento.getTransmissao().getPc(), evento.getTransmissao().getQuadro(), true);
 				
@@ -145,13 +149,13 @@ public class Quadro {
 		return 0;
 	}
 	
-	public Long binaryBackoff() throws QuadroDescartadoException {
+	public Long binaryBackoff(Evento evento) throws QuadroDescartadoException {
 		
-		if (numeroDeColisoes > 15) throw new QuadroDescartadoException();
+		if (evento.getQuadro().numeroDeColisoes > 2) throw new QuadroDescartadoException();
 		else {
 			Long tempoMultiplicador = new Long(51200); // 51,2 us
 		
-			int k = this.numeroDeColisoes > 10 ? 10 : this.numeroDeColisoes;
+			int k = evento.getQuadro().numeroDeColisoes > 10 ? 10 : evento.getQuadro().numeroDeColisoes;
 			int limite = (int)Math.pow(2, k) - 1;
 			Random rand = new Random();
 			int i = rand.nextInt(limite + 1); // intervalo fechado [0, 2^k - 1]
@@ -182,6 +186,11 @@ public class Quadro {
 							if(transmissoesAbertas.isEmpty()) break;
 						} catch (QuadroDescartadoException e) {
 							System.out.println("Quadro descartado " + recp.getQuadro());
+							//Simulador.filaEventos.remove(recp);
+							for(Recepcao r : trans.getRecepcoes().values()){
+								Simulador.filaEventos.remove(r);
+							}
+							trans.getRecepcoes().clear();
 						}
 					}
 				}

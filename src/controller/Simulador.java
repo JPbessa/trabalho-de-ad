@@ -159,12 +159,13 @@ public class Simulador {
 		 * Retorna o ultimo evento criado na analise da fase transiente.
 		 */
 		System.out.println("[Inicio da Fase Transiente]");		
+
+		rodadaAtual = 0;
 		
 		for (PC pc : pcsConectados) {
 			pc.gerarMensagens(00,0);
 		}
 		
-		rodadaAtual = 0;
 		
 		// inicio da execucao dos eventos da rodada
 		Evento evento = filaEventos.first();
