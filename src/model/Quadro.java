@@ -43,6 +43,11 @@ public class Quadro {
 					
 					Long tempo = tempoEmissorHub + tempoHubReceptor;
 					
+					if (eventoTransmissao.getTempo() > Simulador.tamanhoFaseTransiente && pc.getDistancia() == 100) {
+						// Se j‡ saiu da fase transiente, somo o tempo ao tempoOcupado. (PC 1 como referencia)
+						Simulador.tempoOcupado += 2 * (emissor.getTempoDeTransmissao() + emissor.atrasoPropagacao());
+					}
+					
 					Evento novoEvento = new Recepcao(tempo, eventoTransmissao.getRodada(), pc, this, eventoTransmissao);
 					Simulador.filaEventos.add(novoEvento);
 					

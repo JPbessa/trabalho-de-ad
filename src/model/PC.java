@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import controller.Simulador;
 
@@ -20,13 +19,10 @@ public class PC {
 	
 	int confirmacoes = 0;
 	
-	private Vector<Double> tap;
-
 	public Transmissao transmissaoCorrente;
 	
 	public PC(int distancia) {
 		this.distancia = distancia;
-		this.tap = new Vector<Double>();
 		this.tx = new ArrayList<Mensagem>();
 	}
 	

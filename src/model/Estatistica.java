@@ -55,7 +55,6 @@ public class Estatistica {
 				adicionarEstatisticaTAP(evento);
 				adicionarEstatisticaTAM(evento);
 				adicionarEstatisticaNCM(evento);
-				adicionarEstatisticaUtilizacao(evento);
 				
 				evento = Simulador.filaEventos.higher(evento);
 			}
@@ -156,7 +155,8 @@ public class Estatistica {
 		for (Long valor : tap_valores.values()) {
 			soma += valor;
 		}
-		System.out.println("E[TAp] = " + (soma/tap_valores.size()));
+		float resultado = tap_valores.size() > 0 ? soma/tap_valores.size() : 0;
+		System.out.println("E[TAp] = " + resultado);
 	}
 	
 	private static void adicionarEstatisticaTAM(Evento evento) {
@@ -236,8 +236,8 @@ public class Estatistica {
 		for (Long valor : tam_valores.values()) {
 			soma += valor;
 		}
-		
-		System.out.println("E[TAm] = " + (soma/tam_valores.size()));
+		float resultado = tam_valores.size() > 0 ? soma/tam_valores.size() : 0;
+		System.out.println("E[TAm] = " + resultado);
 	}
 	
 	private static void adicionarEstatisticaNCM(Evento evento) {
@@ -284,7 +284,7 @@ public class Estatistica {
 		System.out.println("NCm 4: " + mediaColisoesPC4 + " colisoes/quadro");
 	}
 	
-	private static void adicionarEstatisticaUtilizacao(Evento evento) {
+	private static void calcularUtilizacao() {
 		/*
 		 * UtilizaÁ„o
 		 * RelaÁ„o entre o tempo que o meio est· ocupado com alguma transmiss„o
@@ -292,18 +292,14 @@ public class Estatistica {
 		 * de simulaÁ„o, desprezando o tempo da fase transiente. Utilizar a
 		 * estaÁ„o 1 como referÍncia.
 		 */
-		
-		
-	}
-	
-	private static void calcularUtilizacao() {
-		
+		float utilizacao = (float)(Simulador.tempoOcupado * 100) / (float)(Simulador.numeroDeRodadas * Simulador.getTamanhoRodada());
+		System.out.println("Utilização do Ethernet: " + utilizacao + "%"); 
 	}
 	
 	private static void calcularVazao() {
 		long tempoSimulacao = (long) (Math.pow(10, -9) * Simulador.getTamanhoRodada() * Simulador.numeroDeRodadas);
 		for (PC pc : Simulador.getPcsConectados()) {
-			System.out.println("Vazão do PC de " + pc.getDistancia() + "m: " + pc.getQuadrosEnviados()/tempoSimulacao);
+			System.out.println("Vazão do PC de " + pc.getDistancia() + "m: " + pc.getQuadrosEnviados()/tempoSimulacao + " quadros/segundo");
 		}
 	}
 
