@@ -92,11 +92,11 @@ public class Quadro {
 		System.out.println("COLIDIU! Quadro: " + this.hashCode() + ", PC: " + emissor +", NumColisoes (tratarColisao) =" + evento.getQuadro().getNumeroDeColisoes());
 		
 		//FIXME tempoAdicional deve ser Tempo da Colisão + binaryBackOff
-		Long tempoAdicional = evento.getTempo() + binaryBackoff();
+		Long tempoAdicional = evento.getTempo() + evento.getQuadro().binaryBackoff();
 	
 		Evento novoEvento = new Transmissao(tempoAdicional, evento.getRodada(), emissor, this, true);
 		System.out.println("Tempo futuro " + tempoAdicional);
-		Simulador.filaEventos.add(novoEvento);	
+		Simulador.filaEventos.add(novoEvento);
 		
 	}
 	
@@ -107,7 +107,7 @@ public class Quadro {
 		System.out.println("COLIDIU! Quadro: " + evento.getTransmissao().getQuadro().hashCode() + ", PC: " + evento.getTransmissao().getPc() + ", NumColisoes (tratarColisaoRecepcao) ="+ evento.getQuadro().getNumeroDeColisoes());
 		
 		//FIXME tempoAdicional deve ser Tempo da Colisão + binaryBackOff
-		Long tempoAdicional = evento.getTransmissao().getTempo() + binaryBackoff();
+		Long tempoAdicional = evento.getTransmissao().getTempo() + evento.getQuadro().binaryBackoff();
 	
 		Evento novoEvento = new Transmissao(tempoAdicional, evento.getRodada(), evento.getTransmissao().getPc(), evento.getTransmissao().getQuadro(), true);
 				
