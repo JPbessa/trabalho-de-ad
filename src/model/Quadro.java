@@ -1,7 +1,8 @@
 package model;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Random;
+import java.util.SortedSet;
 
 import model.exception.QuadroDescartadoException;
 import controller.Simulador;
@@ -21,86 +22,205 @@ public class Quadro {
 		this.mensagem = msg;
 	}
 	
-	public long transmitir(Transmissao eventoTransmissao) {
+	public void transmitir(Transmissao eventoTransmissao) {
 		
-		if (eventoTransmissao.isTransmissaoImediata() || meioLivre(eventoTransmissao)){
-			
-			boolean temColisaoTransmissao = temColisaoTransmissao(eventoTransmissao);
-			
-			if (emissor.livre(eventoTransmissao, tempoFinalUltimaTransmissao) && !temColisaoTransmissao){
+		// Sente o meio
+		// Se estiver livre e tiver passado 9,6us, transmite
+		// Se estiver livre mas ainda não passou 9,6us, espera passar os 9,6us
+		// Se ao transmitir houver colisão, espera 3,2us e chama o Binary Backoff para encontrar novo tempo de transmissão
+		// Se o meio estiver ocupado, espera o fim da transmissão + 9,6us
+		
+		
+		if (eventoTransmissao.isTransmissaoImediata()){
+			transmiteImediatamente(eventoTransmissao);
+		}
+		else{
+			if (meioLivre(eventoTransmissao)){
+				if (emissor.livre(eventoTransmissao, tempoFinalUltimaTransmissao)){
+					transmiteImediatamente(eventoTransmissao);
+				}
+				else{ // Modifica o tempo do evento de transmissão para daqui a 9,6us e transmite independente do meio
+					System.out.println("Tempo entre quadros nao finalizado. Aguardando 9,6 para novo envio.");
+					eventoTransmissao.setTempo((eventoTransmissao.getTempo() + emissor.tempoEntreQuadros));
 					
-				//Evento eventoTransmissao = Simulador.filaEventos.pollFirst();
-				//emissor.getTx().setQuadroEnviado(emissor.getTx().getQuadros().remove(0));
-				System.out.println("Quadro " + this.hashCode() + " enviado pelo PC " + eventoTransmissao.getPc());
-				
-				Long tempoEmissorHub = eventoTransmissao.getTempo() + 
-									   emissor.getTempoDeTransmissao() + 
-									   emissor.atrasoPropagacao(); // Tempo do emissor ate dentro do HUB.
-				
-				Long tempoHubReceptor;
-				for (PC pc : Simulador.getPcsConectados()) {
-					tempoHubReceptor = emissor.getTempoDeTransmissao() + pc.atrasoPropagacao(); // Tempo de saida do hub ate o receptor.
+					eventoTransmissao.setTransmissaoImediata(true);
 					
-					Long tempo = tempoEmissorHub + tempoHubReceptor;
-					
-					if (eventoTransmissao.getTempo() > Simulador.tamanhoFaseTransiente && pc.getDistancia() == 100) {
-						// Se j‡ saiu da fase transiente, somo o tempo ao tempoOcupado. (PC 1 como referencia)
-						Simulador.tempoOcupado += 2 * (emissor.getTempoDeTransmissao() + emissor.atrasoPropagacao());
-					}
-					
-					Evento novoEvento = new Recepcao(tempo, eventoTransmissao.getRodada(), pc, this, eventoTransmissao);
+					Evento novoEvento = new Transmissao(eventoTransmissao.getTempo(), eventoTransmissao.getRodada(), emissor, this, true);
 					Simulador.filaEventos.add(novoEvento);
-					
-					System.out.println("Evento de Recepcao adicionado a fila: " + novoEvento);
-					System.out.println("Tempo para recebimento do quadro: " + (tempo - eventoTransmissao.getTempo()) + " ns");
 				}
-				
-				tempoFinalUltimaTransmissao = tempoEmissorHub + emissor.getTempoDeTransmissao();
 			}
-			else if (temColisaoTransmissao){
+			else{ // se meio ocupado, espera o fim da transmissao + 9,6us e transmite independente do meio
+				System.out.println("Meio ocupado. Espera fim da transmissão atual + 9,6 para novo envio.");
 				
-				try {
-					tratarColisao(eventoTransmissao);
-					eventoTransmissao.setColidido(true);
-				} catch (QuadroDescartadoException e) {
-					this.emissor.transmissaoCorrente = null;
-//					for(Recepcao r : eventoTransmissao.getRecepcoes().values()){
-//						Simulador.filaEventos.remove(r);
-//					}
-//					eventoTransmissao.getRecepcoes().clear();
-					System.out.println("Quadro descartado: " + this);
-				}
+				// Pega o evento anterior
+				Evento eventoAnterior = Simulador.filaEventos.lower(eventoTransmissao);
+				
+				while (eventoAnterior != null){
+					// Se for um evento do tipo Transmissao e o emissor é outro PC
+					if (eventoAnterior instanceof Transmissao && !eventoAnterior.getPc().equals(emissor)){
 						
-			}	
-			else{				
-				System.out.println("Emissor ocupado! Tempo entre quadros nao finalizado. Aguardando 9,6 para novo envio.");
-				// Gerar evento de transmissao daqui a 9,6us e transmitir independente do meio
-				eventoTransmissao.setTempo((eventoTransmissao.getTempo() + emissor.tempoEntreQuadros));
-				Evento novoEvento = new Transmissao(eventoTransmissao.getTempo(), eventoTransmissao.getRodada(), emissor, this, true);
+						// Modifica o tempo do evento e transmite imediatamente
+						eventoTransmissao.setTempo(GeradorDados.gerarTempoFinalTransmissao((Transmissao)eventoAnterior)
+								+ emissor.tempoEntreQuadros);
+						
+						eventoTransmissao.setTransmissaoImediata(true);
+						
+						Evento novoEvento = new Transmissao(eventoTransmissao.getTempo(), eventoTransmissao.getRodada(), emissor, this, true);
+						Simulador.filaEventos.add(novoEvento);
+						
+						break;
+					}else{
+						eventoAnterior = Simulador.filaEventos.lower(eventoAnterior);
+					}
+				}
+			}
+		}
+	}
+
+	private void transmiteImediatamente(Transmissao eventoTransmissao) {
+		
+		Recepcao eventoColidido = temColisaoTransmissao(eventoTransmissao);
+		
+		if (eventoColidido == null){
+				
+			System.out.println("Quadro " + this.hashCode() + " enviado pelo PC " + eventoTransmissao.getPc());
+			
+			// Tempo do emissor ate dentro do HUB.
+			Long tempoEmissorHub = eventoTransmissao.getTempo() + 
+								   emissor.getTempoDeTransmissao() + 
+								   emissor.atrasoPropagacao();
+			
+			Long tempoHubReceptor;
+			for (PC pc : Simulador.getPcsConectados()) {
+				tempoHubReceptor = emissor.getTempoDeTransmissao() + pc.atrasoPropagacao(); // Tempo de saida do hub ate o receptor.
+				
+				Long tempo = tempoEmissorHub + tempoHubReceptor;
+				
+				/*if (eventoTransmissao.getTempo() > Simulador.tamanhoFaseTransiente && pc.getDistancia() == 100) {
+					// Se j‡ saiu da fase transiente, somo o tempo ao tempoOcupado. (PC 1 como referencia)
+					Simulador.tempoOcupado += 2 * (emissor.getTempoDeTransmissao() + emissor.atrasoPropagacao());
+				}*/
+				
+				Evento novoEvento = new Recepcao(tempo, eventoTransmissao.getRodada(), pc, this, eventoTransmissao);
 				Simulador.filaEventos.add(novoEvento);
+				
+				System.out.println("Evento de Recepcao adicionado a fila: " + novoEvento);
+				System.out.println("Tempo para recebimento do quadro: " + (tempo - eventoTransmissao.getTempo()) + " ns");
+			}
+			
+			tempoFinalUltimaTransmissao = GeradorDados.gerarTempoFinalTransmissao(eventoTransmissao);
+			
+		}
+		else{ // espera 3,2us + binary backoff e retransmite
+			
+			try {
+				tratarColisao(eventoTransmissao, eventoColidido);
+			} catch (QuadroDescartadoException e) {
+				System.out.println("Quadro " + eventoTransmissao.getQuadro().hashCode() + " descartado!");
 			}
 			
 		}
+	}
+	
+	private boolean meioLivre(Transmissao eventoTransmissao) {
 		
-		return 0; //FIXME
+		/*
+		 * Percorre a lista de eventos para verificar se o início da Transmissao 
+		 * esta entre o inicio e o fim de uma Transmissao dos outros computadores
+		 */
+		
+		// pega todas as transmissoes anteriores à transmissao atual
+		SortedSet<Evento> transmissoesAnteriores = Simulador.filaEventos.subSet(Simulador.filaEventos.first(), eventoTransmissao);
+		
+		// para cada uma dessas transmissoes, calcula o tempo final da transmissao do pc ao hub e verifica se o
+		// tempo de transmissao do evento atual está nesse intervalo
+		for (Evento evento : transmissoesAnteriores){
+
+			// se o evento é de transmissão e não é do PC que está transmitindo o evento atual
+			if ((evento instanceof Transmissao) && (!evento.getPc().equals(eventoTransmissao.getPc()))){
+				 
+				if ((eventoTransmissao.getTempo() > evento.getTempo()) 
+						&& (eventoTransmissao.getTempo() < GeradorDados.gerarTempoFinalTransmissao((Transmissao)evento))){
+					return false;
+				}
+			}
+		}
+		
+		return true;
+		
 	}
 
-	public void tratarColisao(Evento evento) throws QuadroDescartadoException {
+
+	private void tratarColisao(Transmissao eventoTransmissao, Recepcao eventoColidido) throws QuadroDescartadoException {
 		
-		evento.getQuadro().setNumeroDeColisoes(evento.getQuadro().getNumeroDeColisoes()+1);
+		// incrementa o numero de colisões dos quadros
+		eventoTransmissao.getQuadro().setNumeroDeColisoes(eventoTransmissao.getQuadro().getNumeroDeColisoes()+1);
+		eventoColidido.getQuadro().setNumeroDeColisoes(eventoColidido.getQuadro().getNumeroDeColisoes()+1);
 		
-		System.out.println("COLIDIU! Quadro: " + this.hashCode() + ", PC: " + emissor +", NumColisoes (tratarColisao) =" + evento.getQuadro().getNumeroDeColisoes());
+		// seta todos os eventos envolvidos como colididos
+		eventoTransmissao.setColidido(true);
+		Transmissao txEventoColidido = eventoColidido.getTransmissao();
+		txEventoColidido.setColidido(true);
+		Collection<Recepcao> recepcoes = txEventoColidido.getRecepcoes().values();
+		for (Recepcao recepcao : recepcoes){
+			recepcao.setColidido(true);
+		}
+						
+		System.out.println("COLIDIU! Quadro: " + this.hashCode() + ", PC: " + emissor +", NumColisoes (tratarColisao) =" + eventoTransmissao.getQuadro().getNumeroDeColisoes());
+		System.out.println("Colisão! Aguardando 3,2 + Binary Backoff para novo envio.");
 		
-		//FIXME tempoAdicional deve ser Tempo da Colisão + binaryBackOff
-		Long tempoAdicional = evento.getTempo() + evento.getQuadro().binaryBackoff();
-	
-		Evento novoEvento = new Transmissao(tempoAdicional, evento.getRodada(), emissor, this, true);
-		System.out.println("Tempo futuro " + tempoAdicional);
-		Simulador.filaEventos.add(novoEvento);
+		// calcula o novo tempo de envio dos quadros
+		Long tempoAdicionalTx = eventoTransmissao.getTempo() + 3200 + eventoTransmissao.getQuadro().binaryBackoff();
+		Long tempoAdicionalRx = eventoColidido.getTempo() + 3200 + eventoColidido.getQuadro().binaryBackoff();
+		
+		// cria novo evento e coloca na fila de eventos
+		Evento novoEventoTx = new Transmissao(tempoAdicionalTx, eventoTransmissao.getRodada(), emissor, this, true);
+		Evento novoEventoRx = new Transmissao(tempoAdicionalRx, eventoTransmissao.getRodada(), emissor, eventoColidido.getQuadro(), true);
+		
+		System.out.println("Tempo futuro do quadro que estava sendo transmitido" + tempoAdicionalTx);
+		System.out.println("Tempo futuro do quadro que estava sendo recebido" + tempoAdicionalRx);
+		
+		// adiciona novos eventos na lista
+		Simulador.filaEventos.add(novoEventoTx);
+		Simulador.filaEventos.add(novoEventoRx);
 		
 	}
 	
-	public void tratarColisaoRecepcao(Recepcao evento) throws QuadroDescartadoException {
+	
+	private Recepcao temColisaoTransmissao(Transmissao eventoTransmissao){
+		
+		/*
+		 * Verificar se durante o tempo de transmissão do evento atual
+		 * algum outro evento vai chegar para ser recebido e não é o quadro
+		 * enviado pelo PC emissor.
+		 */
+		
+		Long tempoInicioTransmissaoAtual = eventoTransmissao.getTempo();
+		Long tempoFimTransmissaoAtual = GeradorDados.gerarTempoFinalTransmissao(eventoTransmissao);
+		
+		// pega todas as recepcoes futuras
+		SortedSet<Evento> recepcoesFuturas = Simulador.filaEventos.tailSet(eventoTransmissao, false);
+		
+		// para cada uma dessas recepções, verifica se o tempo de inicio delas esta entre o periodo de execução
+		// da transmissao atual
+		for (Evento evento : recepcoesFuturas){
+
+			// se o evento é de recepção e não é do PC que está transmitindo o evento atual
+			if ((evento instanceof Recepcao) && (!evento.getPc().equals(emissor))){
+				 
+				if ((tempoInicioTransmissaoAtual < evento.getTempo()) 
+						&& (tempoFimTransmissaoAtual > evento.getTempo())){
+					return (Recepcao)evento;
+				}
+			}
+		}
+
+		return null;
+				
+	}
+
+	
+	/*public void tratarColisaoRecepcao(Recepcao evento) throws QuadroDescartadoException {
 		
 		evento.getQuadro().setNumeroDeColisoes(evento.getQuadro().getNumeroDeColisoes()+1);
 		
@@ -119,31 +239,9 @@ public class Quadro {
 		
 		List<Transmissao> transmissoesReceptor = Simulador.transmissoesAbertas.get(evento.getPc());
 		transmissoesReceptor.remove(((Recepcao) evento).getTransmissao());
-	}
+	}*/
 	
-	private boolean meioLivre(Transmissao eventoTransmissao) {
 	
-		/*
-		 * Percorre a lista de eventos para verificar se
-		 * a Transmissao esta entre o inicio e o fim de uma
-		 * Transmissao dos outros computadores
-		 */
-		
-		for (Evento evento : Simulador.filaEventos){
-			
-			if ((evento instanceof Transmissao) && (!evento.getPc().equals(eventoTransmissao.getPc()))){
-				
-				if ((eventoTransmissao.getTempo() > evento.getTempo()) 
-						&& (eventoTransmissao.getTempo() < GeradorDados.gerarTempoFinalTransmissao((Transmissao)evento))){
-					return false;
-				}
-			}
-			
-		}
-		
-		return true;
-	}
-
 	public long receber(Recepcao eventoRecepcao) {
 		// Coleta as estatisticas da rodada
 		//System.out.println("receber();");
@@ -156,13 +254,13 @@ public class Quadro {
 	
 	public Long binaryBackoff() throws QuadroDescartadoException {
 		
-		if (numeroDeColisoes > 2) {
+		if (numeroDeColisoes >= 16) {
 			throw new QuadroDescartadoException();
 		}
 		else {
 			Long tempoMultiplicador = new Long(51200); // 51,2 us
 		
-			int k = numeroDeColisoes > 10 ? 10 : numeroDeColisoes;
+			int k = numeroDeColisoes >= 10 ? 10 : numeroDeColisoes;
 			int limite = (int)Math.pow(2, k) - 1;
 			Random rand = new Random();
 			int i = rand.nextInt(limite + 1); // intervalo fechado [0, 2^k - 1]
@@ -170,47 +268,7 @@ public class Quadro {
 			return i * tempoMultiplicador;
 		}
 	}
-	
-	public boolean temColisaoTransmissao(Transmissao eventoTransmissao){
 		
-		/*
-		 * Se a transmissao atual estiver entre o inicio de uma transmissao e o fim da recepcao
-		 * do mesmo quadro para o computador da transmissao atual, ocorre uma colisao.
-		 */
-		
-		List<Transmissao> transmissoesAbertas = Simulador.transmissoesAbertas.get(eventoTransmissao.getPc());
-		
-		if (transmissoesAbertas != null && !transmissoesAbertas.isEmpty()) {
-			for (Transmissao trans: transmissoesAbertas) {
-
-				Recepcao recp = trans.getRecepcoes().get(emissor);
-				if (recp!=null && !recp.getQuadro().equals(eventoTransmissao.getQuadro())){
-					if (!recp.isColidido()){
-						System.out.println("Quadros colididos: TX: " + eventoTransmissao.getQuadro() + ", RX: " + recp.getQuadro());
-						recp.setColidido(true);
-						try {
-							tratarColisaoRecepcao(recp);
-							if(transmissoesAbertas.isEmpty()) break;
-						} catch (QuadroDescartadoException e) {
-							System.out.println("Quadro descartado " + recp.getQuadro());
-							//Simulador.filaEventos.remove(recp);
-//							for(Recepcao r : trans.getRecepcoes().values()){
-//								Simulador.filaEventos.remove(r);
-//							}
-//							trans.getRecepcoes().clear();
-						}
-					}
-				}
-				
-			}
-			
-			return true;
-		}
-		
-		return false;
-		
-	}
-	
 	@Override
 	public String toString() {
 		return "" + this.hashCode() ;

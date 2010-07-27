@@ -130,20 +130,23 @@ public class Simulador {
 				
 				System.out.println("TEMPO: " + evento.getTempo());
 				
-				// Se o evento eh da proxima rodada
+				// Verifica se o evento atual faz parte da próxima rodada. Se sim, calcula as estatísticas da rodada atual
+				// e inicia nova rodada
 				if (evento.getTempo() >= rodadaAtual * getTamanhoRodada() + getFaseTransiente()) {
 					
 					Estatistica.calcularEstatisticas(primeiroEventoRodada);
-					
 					primeiroEventoRodada = evento;
 					break;
+					
 				}
 				
-				// FIXME ver se o evento eh da rodada para coleta de estatistica, passar rodada para evento.
+				// Executa o evento
 				evento.executar();
 				
+				// Atualiza a lista de transmissoes em andamento, sejam elas transmissoes de fato ou recepões
 				atualizarTransmissoesAbertas(evento);
 				
+				// Gera mensagem para os pcs conectados
 				for (PC pc : pcsConectados) {
 					pc.gerarMensagens(evento.getTempo(), rodadaAtual);
 				}

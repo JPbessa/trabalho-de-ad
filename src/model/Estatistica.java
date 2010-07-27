@@ -49,16 +49,18 @@ public class Estatistica {
 		Evento evento = primeiroEventoRodada;
 		
 		if (evento.getTempo() >= Simulador.tamanhoFaseTransiente) {
-			// A rodada atual no Simulador est‡ sempre na frente, pois esta rotina  executada depois.
-			while (evento != null && evento.getRodada() == rodadaAtual-1) {
+			// A rodada atual no Simulador estï¿½ sempre na frente, pois esta rotina ï¿½ executada depois.
+			while (evento != null) {
 				
-				adicionarEstatisticaTAP(evento);
-				adicionarEstatisticaTAM(evento);
-				adicionarEstatisticaNCM(evento);
-				
+				if(evento.getRodada() == rodadaAtual){
+					adicionarEstatisticaTAP(evento);
+					adicionarEstatisticaTAM(evento);
+					adicionarEstatisticaNCM(evento);
+					//System.out.println("Rodada do ultimo evento verificado para estatistica =" + evento.getRodada());
+				}
 				evento = Simulador.filaEventos.higher(evento);
 			}
-			
+			System.out.println("Iniciando geracao de arquivo de saida.txt");
 			try {
 				
 				writer = new PrintWriter( new FileWriter(Simulador.saida,true) );
@@ -82,39 +84,39 @@ public class Estatistica {
 		/*
 		 * TAp = Tempo de Acesso:
 		 * Intervalo entre o primeiro instante em que o quadro foi considerado
-		 * para transmissão até o início de sua transmissão em que ocorreu com sucesso.
+		 * para transmissï¿½o atï¿½ o inï¿½cio de sua transmissï¿½o em que ocorreu com sucesso.
 		 */
 		
-		// Só interessa os eventos de Transmissão para o cálculo
+		// Sï¿½ interessa os eventos de Transmissï¿½o para o cï¿½lculo
 		if (evento instanceof Transmissao) {
 			
 			Transmissao trans = tap_transmissoesAbertas.get(evento.getQuadro());
 			
-			// Se o evento não colidiu, calculamos o TAp
+			// Se o evento nï¿½o colidiu, calculamos o TAp
 			if (!evento.isColidido()) {
 				
-				// Se existe uma transmissão do quadro em aberto
+				// Se existe uma transmissï¿½o do quadro em aberto
 				if (trans != null) {
 					
-					// TAp é o intervalo entre a primeira tentativa e essa com sucesso
+					// TAp ï¿½ o intervalo entre a primeira tentativa e essa com sucesso
 					tap_valores.put( evento.getQuadro(), evento.getTempo() - trans.getTempo() );
 					
-				// Se não, é sinal que o quadro foi transmitido com sucesso na primeira tentativa
+				// Se nï¿½o, ï¿½ sinal que o quadro foi transmitido com sucesso na primeira tentativa
 				} else {
 					
-					// TAp é Zero
+					// TAp ï¿½ Zero
 					tap_valores.put( evento.getQuadro(), 0l );
 				}
 				
 			// Se o evento colidiu
 			} else {
 				
-				// E existe uma transmissão em aberto para o mesmo quadro,
-				// ignora o evento atual pois ele só é mais uma colisão.
-				// Mas caso não haja uma transmissão em aberto 
+				// E existe uma transmissï¿½o em aberto para o mesmo quadro,
+				// ignora o evento atual pois ele sï¿½ ï¿½ mais uma colisï¿½o.
+				// Mas caso nï¿½o haja uma transmissï¿½o em aberto 
 				if (trans == null) {
 					
-					// Acrescenta a transmissão atual na lista de transmissões em aberto
+					// Acrescenta a transmissï¿½o atual na lista de transmissï¿½es em aberto
 					tap_transmissoesAbertas.put(evento.getQuadro(),(Transmissao) evento);
 				}
 			}
@@ -162,27 +164,27 @@ public class Estatistica {
 	private static void adicionarEstatisticaTAM(Evento evento) {
 		/*
 		 * TAm = Tempo de Acesso de uma Mensagem:
-		 * Intervalo entre o instante em que o primeiro quadro da mensagem é
-		 * considerado para transmissão até o instante de início da transmissão
-		 * com sucesso do último quadro da mensagem.
+		 * Intervalo entre o instante em que o primeiro quadro da mensagem ï¿½
+		 * considerado para transmissï¿½o atï¿½ o instante de inï¿½cio da transmissï¿½o
+		 * com sucesso do ï¿½ltimo quadro da mensagem.
 		 */
 		
-		// Só interessa os eventos de Transmissão para o cálculo
+		// Sï¿½ interessa os eventos de Transmissï¿½o para o cï¿½lculo
 		if (evento instanceof Transmissao) {
 			
 			Transmissao trans = tam_transmissoesAbertas.get(evento.getQuadro().getMensagem());
 			
 			Quadro ultimoQuadroMensagem = evento.getQuadro().getMensagem().getQuadros().get( evento.getQuadro().getMensagem().getQuadros().size()-1 );
 			
-			// Se o evento não colidiu e é do ultimo quadro da mensagem, calculamos o TAm
+			// Se o evento nï¿½o colidiu e ï¿½ do ultimo quadro da mensagem, calculamos o TAm
 			if (!evento.isColidido() && evento.getQuadro().equals(ultimoQuadroMensagem)) {
 				
-				// Se não há Transmissão em aberto
-				// (ou seja, a Mensagem só tem um quadro que foi enviado com sucesso na primeira vez)
+				// Se nï¿½o hï¿½ Transmissï¿½o em aberto
+				// (ou seja, a Mensagem sï¿½ tem um quadro que foi enviado com sucesso na primeira vez)
 				if (trans == null) {
 					tam_valores.put( evento.getQuadro().getMensagem(), 0l );
 					
-				// Se não, a Transmissão em aberto existe porque a mensagem tem vários quadros
+				// Se nï¿½o, a Transmissï¿½o em aberto existe porque a mensagem tem vï¿½rios quadros
 				} else {
 					tam_valores.put( evento.getQuadro().getMensagem(), evento.getTempo() - trans.getTempo() );
 				}
@@ -190,12 +192,12 @@ public class Estatistica {
 			// Se o evento colidiu
 			} else {
 				
-				// E existe uma transmissão em aberto para a mesma mensagem,
-				// ignora o evento atual pois ele só é mais uma colisão.
-				// Mas caso não haja uma transmissão em aberto 
+				// E existe uma transmissï¿½o em aberto para a mesma mensagem,
+				// ignora o evento atual pois ele sï¿½ ï¿½ mais uma colisï¿½o.
+				// Mas caso nï¿½o haja uma transmissï¿½o em aberto 
 				if (trans == null) {
 					
-					// Acrescenta a transmissão atual na lista de transmissões em aberto
+					// Acrescenta a transmissï¿½o atual na lista de transmissï¿½es em aberto
 					tam_transmissoesAbertas.put(evento.getQuadro().getMensagem(), (Transmissao) evento);
 				}
 			}
@@ -242,13 +244,13 @@ public class Estatistica {
 	
 	private static void adicionarEstatisticaNCM(Evento evento) {
 		/*
-		 * NCm = Número Médio de Colisões por Quadro na Estação
-		 * Calculado dividindo o número de colisões dos quadros de uma mensagem 
-		 * pelo número de quadros da mensagem.
+		 * NCm = Nï¿½mero Mï¿½dio de Colisï¿½es por Quadro na Estaï¿½ï¿½o
+		 * Calculado dividindo o nï¿½mero de colisï¿½es dos quadros de uma mensagem 
+		 * pelo nï¿½mero de quadros da mensagem.
 		 */
 		
-		// Só nos interessa os eventos de Transmissao que tenham terminado com sucesso (sem colisao)
-		// Assim garantimos que contabilizaremos apenas 1 única vez cada quadro e suas colisoes
+		// Sï¿½ nos interessa os eventos de Transmissao que tenham terminado com sucesso (sem colisao)
+		// Assim garantimos que contabilizaremos apenas 1 ï¿½nica vez cada quadro e suas colisoes
 		if (evento instanceof Transmissao && !evento.isColidido()) {
 			switch(evento.getQuadro().getMensagem().getEmissor().getDistancia()){
 			case 100:
@@ -286,20 +288,20 @@ public class Estatistica {
 	
 	private static void calcularUtilizacao() {
 		/*
-		 * Utilização
-		 * Relação entre o tempo que o meio está ocupado com alguma transmissão
-		 * (quadro com sucesso, ou colisão ou reforço de colisão) e o tempo total
-		 * de simulação, desprezando o tempo da fase transiente. Utilizar a
-		 * estação 1 como referência.
+		 * Utilizaï¿½ï¿½o
+		 * Relaï¿½ï¿½o entre o tempo que o meio estï¿½ ocupado com alguma transmissï¿½o
+		 * (quadro com sucesso, ou colisï¿½o ou reforï¿½o de colisï¿½o) e o tempo total
+		 * de simulaï¿½ï¿½o, desprezando o tempo da fase transiente. Utilizar a
+		 * estaï¿½ï¿½o 1 como referï¿½ncia.
 		 */
 		float utilizacao = (float)(Simulador.tempoOcupado * 100) / (float)(Simulador.numeroDeRodadas * Simulador.getTamanhoRodada());
-		System.out.println("Utiliza‹o do Ethernet: " + utilizacao + "%"); 
+		System.out.println("Utilizaï¿½ï¿½o do Ethernet: " + utilizacao + "%"); 
 	}
 	
 	private static void calcularVazao() {
 		long tempoSimulacao = (long) (Math.pow(10, -9) * Simulador.getTamanhoRodada() * Simulador.numeroDeRodadas);
 		for (PC pc : Simulador.getPcsConectados()) {
-			System.out.println("Vaz‹o do PC de " + pc.getDistancia() + "m: " + pc.getQuadrosEnviados()/tempoSimulacao + " quadros/segundo");
+			System.out.println("Vazï¿½o do PC de " + pc.getDistancia() + "m: " + pc.getQuadrosEnviados()/tempoSimulacao + " quadros/segundo");
 		}
 	}
 

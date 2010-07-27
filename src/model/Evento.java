@@ -8,7 +8,8 @@ public abstract class Evento implements Comparable<Evento>{
 	private Quadro quadro;
 	private long id;
 	private static long uid;
-	
+	private boolean transmissaoImediata = false;
+		
 	public Evento(Long tempo, int rodada, PC pc, Quadro quadro){
 		
 		assert(quadro!=null);
@@ -60,6 +61,14 @@ public abstract class Evento implements Comparable<Evento>{
 		this.tempo = tempo;
 	}
 
-	public abstract boolean isColidido();
+	public boolean isTransmissaoImediata() {
+		return transmissaoImediata;
+	}
 
+	public void setTransmissaoImediata(boolean transmissaoImediata) {
+		this.transmissaoImediata = transmissaoImediata;
+	}
+	
+	public abstract boolean isColidido();
+	
 }

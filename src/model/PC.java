@@ -115,7 +115,7 @@ public class PC {
 		if (eventoTransmissao.getTempo() >= (tempoFinalUltimaTransmissao + tempoEntreQuadros))
 			return true;
 		
-		return true;
+		return false;
 		
 	}
 

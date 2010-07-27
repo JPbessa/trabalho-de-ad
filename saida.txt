@@ -1,16 +1,2 @@
 1	PC 80	E[TAp]	0.0
 Rodada: 1	PC 80	E[TAm]	0.0
-2	PC 80	E[TAp]	0.0
-Rodada: 2	PC 80	E[TAm]	0.0
-3	PC 80	E[TAp]	0.0
-Rodada: 3	PC 80	E[TAm]	0.0
-4	PC 80	E[TAp]	0.0
-Rodada: 4	PC 80	E[TAm]	0.0
-5	PC 80	E[TAp]	0.0
-Rodada: 5	PC 80	E[TAm]	0.0
-6	PC 80	E[TAp]	0.0
-Rodada: 6	PC 80	E[TAm]	0.0
-7	PC 80	E[TAp]	0.0
-Rodada: 7	PC 80	E[TAm]	0.0
-8	PC 80	E[TAp]	0.0
-Rodada: 8	PC 80	E[TAm]	0.0
