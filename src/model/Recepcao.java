@@ -38,7 +38,7 @@ public class Recepcao extends Evento {
 	@Override
 	public String toString() {
 		return "evento {" +
-					"tipo: Recepcao" + 
+					"tipo: Recepcao, " + 
 					"tempo: " + getTempo() + ", " +
 					"rodada: " + getRodada() + ", " +
 					"pc: " + getPc() + ", " +

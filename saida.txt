@@ -1,2 +1,9 @@
-1	PC 80	E[TAp]	0.0
-Rodada: 1	PC 80	E[TAm]	0.0
+TAp da estacao 100m: 0.0ns
+TAp da estacao 80m: -261625.19ns
+TAm da estacao 100m: 0.0ns
+TAm da estacao 80m: 0.0ns
+NCm da estacao 100m: 0.0 colisoes/quadro
+NCm da estacao 80m: 0.46859902 colisoes/quadro
+Utilizacao do Ethernet: 0.0%
+Vazao da estacao 100m: 2 quadros/segundo
+Vazao da estacao 80m: 682 quadros/segundo

@@ -23,18 +23,27 @@ public class Estatistica {
 	
 	private static PrintWriter writer;
 	
+	// TAp
+	private static HashMap<Quadro,Transmissao> tap_transmissoesAbertas = new HashMap<Quadro,Transmissao>();
+	private static HashMap<Quadro,Long> tap_valores = new HashMap<Quadro,Long>();
+	
+	// TAm
+	private static HashMap<Mensagem,Transmissao> tam_transmissoesAbertas = new HashMap<Mensagem,Transmissao>();
+	private static HashMap<Mensagem,Long> tam_valores = new HashMap<Mensagem,Long>();
+	
+	// NCm
 	private static Map<PC, List<Quadro>> quadrosPorPc = new HashMap<PC, List<Quadro>>();
 	
-	public static void calcularEstatisticas(Evento primeiroEventoProximaRodada) {
+	public static void calcularEstatisticas(Evento primeiroEventoRodada) {
 		int rodadaAtual = Simulador.getRodadaAtual();
-		Evento evento = primeiroEventoProximaRodada;
+		Evento evento = primeiroEventoRodada;
 		
-		while (evento.getRodada() == rodadaAtual){
-			evento = Simulador.filaEventos.lower(evento); // Calculando as estatisticas de tras para frente.
-			
-			//adicionarEstatisticaTAP(evento);
-			//adicionarEstatisticaTAM(evento);
+		while (evento != null){
+			adicionarEstatisticaTAP(evento);
+			adicionarEstatisticaTAM(evento);
 			adicionarEstatisticaNCM(evento);
+			
+			evento = Simulador.filaEventos.higher(evento);
 		}
 		
 		if (rodadaAtual == Simulador.numeroDeRodadas) {
@@ -46,8 +55,8 @@ public class Estatistica {
 		try {
 			writer = new PrintWriter( new FileWriter(Simulador.saida,true) );
 			
-			//calcularTAP();
-			//calcularTAM();
+			calcularTAP();
+			calcularTAM();
 			calcularNCM();
 			calcularUtilizacao();
 			calcularVazao();
@@ -60,6 +69,70 @@ public class Estatistica {
 		}
 	}
 	
+	private static void adicionarEstatisticaTAP(Evento evento) {
+		// Soh interessa os eventos de Transmissao para o calculo
+		if (evento instanceof Transmissao) {
+
+			Transmissao trans = tap_transmissoesAbertas.get(evento.getQuadro());
+
+			// Se o evento nao colidiu, calculamos o TAp
+			if (!evento.isColidido()) {
+				// Se existe uma transmissao do quadro em aberto
+				if (trans != null) {
+					// TAp eh o intervalo entre a primeira tentativa e essa com sucesso
+					tap_valores.put( evento.getQuadro(), evento.getTempo() - trans.getTempo() );
+					// Se nao, eh sinal que o quadro foi transmitido com sucesso na primeira tentativa
+				} else {
+					// TAp eh Zero
+					tap_valores.put( evento.getQuadro(), 0l );
+				}
+			// Se o evento colidiu
+			} else {
+
+				// E existe uma transmissao em aberto para o mesmo quadro,
+				// ignora o evento atual pois ele soh eh mais uma colisao.
+				// Mas caso nao haja uma transmissao em aberto
+				if (trans == null) {
+					// Acrescenta a transmissao atual na lista de transmissoes em aberto
+					tap_transmissoesAbertas.put(evento.getQuadro(),(Transmissao) evento);
+				}
+			}
+
+		}
+	}
+	
+	private static void adicionarEstatisticaTAM(Evento evento) {
+		 if (evento instanceof Transmissao) {
+
+			 Transmissao trans = tam_transmissoesAbertas.get(evento.getQuadro().getMensagem());
+
+			 Quadro ultimoQuadroMensagem = evento.getQuadro().getMensagem().getQuadros().get( evento.getQuadro().getMensagem().getQuadros().size()-1 );
+
+			 // Se o evento nao colidiu e eh do ultimo quadro da mensagem, calculamos o TAm
+			 if (!evento.isColidido() && evento.getQuadro().equals(ultimoQuadroMensagem)) {
+
+				 // Se nao ha Transmissao em aberto
+				 // (ou seja, a Mensagem soh tem um quadro que foi enviado com sucesso na primeira vez)
+				 if (trans == null) {
+					 tam_valores.put( evento.getQuadro().getMensagem(), 0l );
+
+					 // Se nao, a Transmissao em aberto existe porque a mensagem tem varios quadros
+				 } else {
+					 tam_valores.put( evento.getQuadro().getMensagem(), evento.getTempo() - trans.getTempo() );
+				 }
+			 // Se o evento colidiu
+			 } else {
+				 // E existe uma transmissao em aberto para a mesma mensagem,
+				 // ignora o evento atual pois ele soh eh mais uma colisao.
+				 // Mas caso nao haja uma transmissao em aberto
+				 if (trans == null) {
+					 // Acrescenta a transmissao atual na lista de transmissoes em aberto
+					 tam_transmissoesAbertas.put(evento.getQuadro().getMensagem(), (Transmissao) evento);
+				 }
+			 }
+		 }
+	}
+	
 	private static void adicionarEstatisticaNCM(Evento evento) {
 		if (evento instanceof Recepcao) {
 			PC emissor = evento.getQuadro().getMensagem().getEmissor();
@@ -69,6 +142,38 @@ public class Estatistica {
 			if (!quadrosPorPc.get(emissor).contains(evento.getQuadro())) {
 				quadrosPorPc.get(emissor).add(evento.getQuadro());
 			}
+		}
+	}
+	
+	private static void calcularTAP() {
+		for (PC pc : Simulador.getPcsConectados()) {
+			int soma = 0; float resultado = 0;
+			String output;
+			for (Quadro quadro : tap_valores.keySet()) {
+				if (quadro.getMensagem().getEmissor().equals(pc)) {
+					soma += tap_valores.get(quadro);
+				}
+			}
+			resultado = tap_valores.size() > 0 ? (float)soma/(float)tap_valores.size() : 0;
+			output = "TAp da estacao " + pc + ": " + resultado + "ns";
+			imprimir(output);
+			soma = 0;
+		}
+	}
+	
+	private static void calcularTAM() {
+		for (PC pc : Simulador.getPcsConectados()) {
+			int soma = 0; float resultado = 0;
+			String output;
+			for (Mensagem mensagem : tam_valores.keySet()) {
+				if (mensagem.getEmissor().equals(pc)) {
+					soma += tam_valores.get(mensagem);
+				}
+			}
+			resultado = tam_valores.size() > 0 ? (float)soma/(float)tam_valores.size() : 0;
+			output = "TAm da estacao " + pc + ": " + resultado + "ns";
+			imprimir(output);
+			soma = 0;
 		}
 	}
 	
@@ -85,8 +190,7 @@ public class Estatistica {
 				output = "NCm da estacao " + pc + ": 0.0 colisoes/quadro";
 			}
 			
-			System.out.println(output);
-			writer.println(output);
+			imprimir(output);
 			soma = 0;
 		}
 	}
@@ -94,16 +198,19 @@ public class Estatistica {
 	private static void calcularUtilizacao() {
 		 float utilizacao = (float)(Simulador.tempoOcupado * 100) / (float)(Simulador.numeroDeRodadas * Simulador.getTamanhoRodada());
 		 String output = "Utilizacao do Ethernet: " + utilizacao + "%";
-		 System.out.println(output); 
-		 writer.println(output);
+		 imprimir(output); 
 	}
 	
 	private static void calcularVazao() {
 		 long tempoSimulacao = (long) (Math.pow(10, -9) * Simulador.getTamanhoRodada() * Simulador.numeroDeRodadas);
 		 for (PC pc : Simulador.getPcsConectados()) {
 			 String output = "Vazao da estacao " + pc + ": " + pc.getQuadrosEnviados()/tempoSimulacao + " quadros/segundo";
-			 System.out.println(output);
-			 writer.println(output);
+			 imprimir(output);
 		 }
+	}
+	
+	private static void imprimir(String output) {
+		System.out.println(output);
+		writer.println(output);
 	}
 }

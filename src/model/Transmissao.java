@@ -49,7 +49,7 @@ public class Transmissao extends Evento {
 	@Override
 	public String toString() {
 		return "evento {" +
-					"tipo: Transmissao" + 
+					"tipo: Transmissao, " + 
 					"tempo: " + getTempo() + ", " +
 					"rodada: " + getRodada() + ", " +
 					"pc: " + getPc() + ", " +

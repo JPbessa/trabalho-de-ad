@@ -118,14 +118,11 @@ public class Simulador {
 	
 	private void iniciarSimulacao() {
 		
-		Evento primeiroEventoRodada = executarFaseTransiente();
+		Evento evento = executarFaseTransiente();
 		
 		// inicio da simulacao - numeroDeRodadas tem a quantidade de execucoes
 		for (rodadaAtual = 1; rodadaAtual <= numeroDeRodadas; rodadaAtual++) {
 			
-			// inicio da execucao dos eventos da rodada
-			Evento evento = primeiroEventoRodada;
-				
 			while (evento!=null){
 				
 				System.out.println("TEMPO: " + evento.getTempo());
@@ -134,8 +131,7 @@ public class Simulador {
 				// e inicia nova rodada
 				if (evento.getTempo() >= rodadaAtual * getTamanhoRodada() + getFaseTransiente()) {
 					
-					primeiroEventoRodada = evento;
-					Estatistica.calcularEstatisticas(evento);
+					Estatistica.calcularEstatisticas(buscarPrimeiroEventoDaRodadaAtual());
 					
 					break;
 				}
@@ -290,6 +286,16 @@ public class Simulador {
 			transmissoes.remove(((Recepcao) evento).getTransmissao());
 			
 		}
+	}
+	
+	// Sou tosco mas sou feliz :)
+	private Evento buscarPrimeiroEventoDaRodadaAtual() {
+		for (Evento evento : filaEventos) {
+			if (evento.getRodada() == rodadaAtual) {
+				return evento;
+			}
+		}
+		return null;
 	}
 
 	private Long getFaseTransiente() {
