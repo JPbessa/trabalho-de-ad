@@ -59,10 +59,10 @@ public class Mensagem {
 		return tempoCriacao;
 	}
 	
-	@Override
-	public String toString() {
-		return "t=" + tempoCriacao + "," + "#quadros=" + numeroDeQuadros + ", pc=" + emissor;
-	}
+//	@Override
+//	public String toString() {
+//		return "t=" + tempoCriacao + "," + "#quadros=" + numeroDeQuadros + ", pc=" + emissor;
+//	}
 	
 	public List<Quadro> getQuadrosEnviados() {
 		return quadrosEnviados;

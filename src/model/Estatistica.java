@@ -59,9 +59,9 @@ public class Estatistica {
 		try {
 			writer = new PrintWriter( new FileWriter(Simulador.saida,true) );
 			
-			calcularTAP();
-			calcularTAM();
-			calcularNCM();
+			esperancaTAP();
+			esperancaTAM();
+			esperancaNCM();
 			calcularUtilizacao();
 			calcularVazao();
 			
@@ -106,35 +106,21 @@ public class Estatistica {
 	}
 	
 	private static void adicionarEstatisticaTAM(Evento evento) {
-		 if (evento instanceof Transmissao) {
-
-			 Transmissao trans = tam_transmissoesAbertas.get(evento.getQuadro().getMensagem());
-
-			 Quadro ultimoQuadroMensagem = evento.getQuadro().getMensagem().getQuadros().get( evento.getQuadro().getMensagem().getQuadros().size()-1 );
-
-			 // Se o evento nao colidiu e eh do ultimo quadro da mensagem, calculamos o TAm
-			 if (!evento.isColidido() && evento.getQuadro().equals(ultimoQuadroMensagem)) {
-
-				 // Se nao ha Transmissao em aberto
-				 // (ou seja, a Mensagem soh tem um quadro que foi enviado com sucesso na primeira vez)
-				 if (trans == null) {
-					 tam_valores.put( evento.getQuadro().getMensagem(), 0l );
-
-					 // Se nao, a Transmissao em aberto existe porque a mensagem tem varios quadros
-				 } else {
-					 tam_valores.put( evento.getQuadro().getMensagem(), evento.getTempo() - trans.getTempo() );
-				 }
-			 // Se o evento colidiu
-			 } else {
-				 // E existe uma transmissao em aberto para a mesma mensagem,
-				 // ignora o evento atual pois ele soh eh mais uma colisao.
-				 // Mas caso nao haja uma transmissao em aberto
-				 if (trans == null) {
-					 // Acrescenta a transmissao atual na lista de transmissoes em aberto
-					 tam_transmissoesAbertas.put(evento.getQuadro().getMensagem(), (Transmissao) evento);
-				 }
-			 }
-		 }
+		if (evento instanceof Transmissao) {
+			Mensagem mensagem = evento.getQuadro().getMensagem();
+			Transmissao transmissaoPrimeiroQuadro = tam_transmissoesAbertas.get(mensagem);
+			
+			if (transmissaoPrimeiroQuadro == null) {
+				// Este eh o primeiro quadro desta mensagem.
+				tam_transmissoesAbertas.put(mensagem, (Transmissao)evento);
+			} else {
+				Long tempoGasto = evento.getTempo() - transmissaoPrimeiroQuadro.getTempo();
+				Long tempoAnterior = tam_valores.get(mensagem) != null ? tam_valores.get(mensagem) : 0l; 
+				if (tempoGasto > tempoAnterior) {
+					tam_valores.put(mensagem, tempoGasto);
+				}
+			}
+		}
 	}
 	
 	private static void adicionarEstatisticaNCM(Evento evento) {
@@ -153,7 +139,7 @@ public class Estatistica {
 		utilizacao += evento.getPc().getTempoDeTransmissao();
 	}
 	
-	private static void calcularTAP() {
+	private static void esperancaTAP() {
 		for (PC pc : Simulador.getPcsConectados()) {
 			Long soma = 0l; float resultado = 0;
 			String output;
@@ -163,13 +149,13 @@ public class Estatistica {
 				}
 			}
 			resultado = tap_valores.size() > 0 ? (float)soma/(float)tap_valores.size() : 0;
-			output = "TAp da estacao " + pc + ": " + resultado + "ns";
+			output = "TAp da estacao " + pc + ": " + resultado*Math.pow(10, -6) + "ms";
 			imprimir(output);
 			soma = 0l;
 		}
 	}
 	
-	private static void calcularTAM() {
+	private static void esperancaTAM() {
 		for (PC pc : Simulador.getPcsConectados()) {
 			Long soma = 0l; float resultado = 0;
 			String output;
@@ -179,13 +165,13 @@ public class Estatistica {
 				}
 			}
 			resultado = tam_valores.size() > 0 ? (float)soma/(float)tam_valores.size() : 0;
-			output = "TAm da estacao " + pc + ": " + resultado + "ns";
+			output = "TAm da estacao " + pc + ": " + resultado*Math.pow(10, -6) + "ms";
 			imprimir(output);
 			soma = 0l;
 		}
 	}
 	
-	private static void calcularNCM() {
+	private static void esperancaNCM() {
 		int soma = 0;
 		String output;
 		for (PC pc : Simulador.getPcsConectados()) {

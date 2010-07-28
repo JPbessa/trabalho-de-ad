@@ -1,9 +1,17 @@
-TAp da estacao 100m: 0.0ns
-TAp da estacao 80m: 323525.72ns
-TAm da estacao 100m: 0.0ns
-TAm da estacao 80m: 0.0ns
+TAp da estacao 100m: 0.0ms
+TAp da estacao 80m: 0.0ms
+TAp da estacao 60m: 0.0ms
+TAp da estacao 40m: 0.0ms
+TAm da estacao 100m: 11.738999ms
+TAm da estacao 80m: 0.0ms
+TAm da estacao 60m: 0.0ms
+TAm da estacao 40m: 0.0ms
 NCm da estacao 100m: 0.0 colisoes/quadro
-NCm da estacao 80m: 0.46459228 colisoes/quadro
-Utilizacao do Ethernet: 100.0%
-Vazao da estacao 100m: 1 quadros/segundo
-Vazao da estacao 80m: 849 quadros/segundo
+NCm da estacao 80m: 0.0 colisoes/quadro
+NCm da estacao 60m: 0.0 colisoes/quadro
+NCm da estacao 40m: 0.0 colisoes/quadro
+Utilizacao do Ethernet: 34.335%
+Vazao da estacao 100m: 549 quadros/segundo
+Vazao da estacao 80m: 68 quadros/segundo
+Vazao da estacao 60m: 68 quadros/segundo
+Vazao da estacao 40m: 68 quadros/segundo
