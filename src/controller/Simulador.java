@@ -44,10 +44,10 @@ public class Simulador {
 		
 		switch (cenario) {
 			case 1:
-				PC1.setP(40); // o correto Ž 40. O 4 foi somente para nao printar mta coisa por enquanto.
+				PC1.setP(40);
 				PC1.setA(new IntervaloChegadas(80*CONVERSAO_TEMPO, TipoDistribuicao.DETERMINISTICO));
 				
-				PC2.setP(40); // o correto Ž 40. O 4 foi somente para nao printar mta coisa por enquanto.
+				PC2.setP(40);
 				PC2.setA(new IntervaloChegadas(80*CONVERSAO_TEMPO, TipoDistribuicao.DETERMINISTICO));
 				
 				pcsConectados.add(PC1);
@@ -134,10 +134,10 @@ public class Simulador {
 				// e inicia nova rodada
 				if (evento.getTempo() >= rodadaAtual * getTamanhoRodada() + getFaseTransiente()) {
 					
-					Estatistica.calcularEstatisticas(primeiroEventoRodada);
 					primeiroEventoRodada = evento;
-					break;
+					Estatistica.calcularEstatisticas(evento);
 					
+					break;
 				}
 				
 				// Executa o evento
