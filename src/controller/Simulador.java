@@ -24,7 +24,7 @@ public class Simulador {
 	public static HashMap<PC,List<Transmissao>> transmissoesAbertas = new HashMap<PC,List<Transmissao>>();
 		
 	private static List<PC> pcsConectados = new ArrayList<PC>();
-	public static Long tempoOcupado = 0l;
+	public static Long tempoOcioso = 0l;
 	
 	public static int numeroDeRodadas = 30;
 	private static int rodadaAtual = 1;
@@ -258,6 +258,7 @@ public class Simulador {
 			Long tempoAvancando = evento.getTempo();
 			while (filaEventos.size() == tam) {
 				tempoAvancando++;
+				tempoOcioso++;
 				for (PC pc : pcsConectados) {
 					pc.gerarMensagens(tempoAvancando, rodadaAtual);
 				}

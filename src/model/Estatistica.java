@@ -147,7 +147,7 @@ public class Estatistica {
 	
 	private static void calcularTAP() {
 		for (PC pc : Simulador.getPcsConectados()) {
-			int soma = 0; float resultado = 0;
+			Long soma = 0l; float resultado = 0;
 			String output;
 			for (Quadro quadro : tap_valores.keySet()) {
 				if (quadro.getMensagem().getEmissor().equals(pc)) {
@@ -157,13 +157,13 @@ public class Estatistica {
 			resultado = tap_valores.size() > 0 ? (float)soma/(float)tap_valores.size() : 0;
 			output = "TAp da estacao " + pc + ": " + resultado + "ns";
 			imprimir(output);
-			soma = 0;
+			soma = 0l;
 		}
 	}
 	
 	private static void calcularTAM() {
 		for (PC pc : Simulador.getPcsConectados()) {
-			int soma = 0; float resultado = 0;
+			Long soma = 0l; float resultado = 0;
 			String output;
 			for (Mensagem mensagem : tam_valores.keySet()) {
 				if (mensagem.getEmissor().equals(pc)) {
@@ -173,7 +173,7 @@ public class Estatistica {
 			resultado = tam_valores.size() > 0 ? (float)soma/(float)tam_valores.size() : 0;
 			output = "TAm da estacao " + pc + ": " + resultado + "ns";
 			imprimir(output);
-			soma = 0;
+			soma = 0l;
 		}
 	}
 	
@@ -196,8 +196,8 @@ public class Estatistica {
 	}
 	
 	private static void calcularUtilizacao() {
-		 float utilizacao = (float)(Simulador.tempoOcupado * 100) / (float)(Simulador.numeroDeRodadas * Simulador.getTamanhoRodada());
-		 String output = "Utilizacao do Ethernet: " + utilizacao + "%";
+		 float ocioso = (float)(Simulador.tempoOcioso) / (float)(Simulador.numeroDeRodadas * Simulador.getTamanhoRodada());
+		 String output = "Utilizacao do Ethernet: " + (1 - ocioso)*100 + "%";
 		 imprimir(output); 
 	}
 	
