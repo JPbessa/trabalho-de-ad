@@ -167,7 +167,7 @@ public class Quadro {
 		}
 						
 		System.out.println("COLIDIU! Quadro: " + this.hashCode() + ", PC: " + emissor +", NumColisoes (tratarColisao) =" + eventoTransmissao.getQuadro().getNumeroDeColisoes());
-		System.out.println("Colisão! Aguardando 3,2 + Binary Backoff para novo envio.");
+		System.out.println("Colisao! Aguardando 3,2 + Binary Backoff para novo envio.");
 		
 		// calcula o novo tempo de envio dos quadros
 		Long tempoAdicionalTx = eventoTransmissao.getTempo() + 3200 + eventoTransmissao.getQuadro().binaryBackoff();

@@ -34,6 +34,9 @@ public class Estatistica {
 	// NCm
 	private static Map<PC, List<Quadro>> quadrosPorPc = new HashMap<PC, List<Quadro>>();
 	
+	// Utilizacao
+	private static Long utilizacao = 0l;
+	
 	public static void calcularEstatisticas(Evento primeiroEventoRodada) {
 		int rodadaAtual = Simulador.getRodadaAtual();
 		Evento evento = primeiroEventoRodada;
@@ -42,6 +45,7 @@ public class Estatistica {
 			adicionarEstatisticaTAP(evento);
 			adicionarEstatisticaTAM(evento);
 			adicionarEstatisticaNCM(evento);
+			adicionarEstatisticaUtilizacao(evento);
 			
 			evento = Simulador.filaEventos.higher(evento);
 		}
@@ -145,6 +149,10 @@ public class Estatistica {
 		}
 	}
 	
+	private static void adicionarEstatisticaUtilizacao(Evento evento) {
+		utilizacao += evento.getPc().getTempoDeTransmissao();
+	}
+	
 	private static void calcularTAP() {
 		for (PC pc : Simulador.getPcsConectados()) {
 			Long soma = 0l; float resultado = 0;
@@ -196,8 +204,8 @@ public class Estatistica {
 	}
 	
 	private static void calcularUtilizacao() {
-		 float ocioso = (float)(Simulador.tempoOcioso) / (float)(Simulador.numeroDeRodadas * Simulador.getTamanhoRodada());
-		 String output = "Utilizacao do Ethernet: " + (1 - ocioso)*100 + "%";
+		 float ro = (float)(utilizacao) / (float)(Simulador.numeroDeRodadas * Simulador.getTamanhoRodada());
+		 String output = "Utilizacao do Ethernet: " + ro*100 + "%";
 		 imprimir(output); 
 	}
 	
